@@ -1,0 +1,10 @@
+parameters:
+#    code_search.example.class: SOA\CodeSearchBundle\Example
+
+services:
+    SearchService:
+        class: SOA\CodeSearchBundle\Services\SearchService
+    GithubService:
+        class: SOA\CodeSearchBundle\Services\GithubService
+    KodersService:
+        class: SOA\CodeSearchBundle\Services\KodersService

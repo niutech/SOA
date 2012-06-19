@@ -1,0 +1,15 @@
+CodeSearchBundle_Search:
+    pattern:  /
+    defaults: { _controller: CodeSearchBundle:Search:index }
+
+CodeSearchBundle_SearchService:
+    pattern:  /search
+    defaults: { _controller: CodeSearchBundle:SearchService:index }
+
+CodeSearchBundle_GithubService:
+    pattern:  /github
+    defaults: { _controller: CodeSearchBundle:GithubService:index }
+
+CodeSearchBundle_KodersService:
+    pattern:  /koders
+    defaults: { _controller: CodeSearchBundle:KodersService:index }
