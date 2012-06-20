@@ -10,7 +10,7 @@ class KodersServiceController extends Controller
     public function indexAction()
     {
         if($this->getRequest()->query->has("wsdl")) {
-            $soap = new \Zend_Soap_AutoDiscover();
+            $soap = new \Zend_Soap_AutoDiscover("Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex");
             $soap->setUri($this->getRequest()->getUriForPath("/koders"));
             $soap->setClass("SOA\CodeSearchBundle\Services\KodersService");
         } else {

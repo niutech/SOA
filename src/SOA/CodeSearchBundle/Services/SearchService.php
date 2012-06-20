@@ -9,15 +9,17 @@ class SearchService {
     /**
      *
      * @param string $query
-     * @return array 
+     * @return SOA\CodeSearchBundle\Services\ResultSet
      */
     public function search($query) {
-        $res = array();
+        $res = new ResultSet($query);
+        $arr = array(); //of Result
         foreach($this->backends as $backend) {
             $soap = new \Zend_Soap_Client("http://localhost/CodeSearchEngine/web/app_dev.php/".$backend."?wsdl");
-            $cur = $soap->search($query);
-            $res = array_merge($res, $cur);
+            $cur = $soap->search($query); //return ResultSet
+            $arr = array_merge($arr, $cur->results);
         }
+        $res->results = array_unique($arr, SORT_REGULAR); //remove duplicates
         return $res;
     }
 

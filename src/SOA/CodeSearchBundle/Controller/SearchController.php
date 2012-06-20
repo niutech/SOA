@@ -16,6 +16,6 @@ class SearchController extends Controller
             $soap = new \Zend_Soap_Client($this->getRequest()->getUriForPath("/search")."?wsdl");
             $res = $soap->search($query);
         }
-        return $this->render('CodeSearchBundle:Search:index.html.php', array('res' => $res, 'query' => $query));
+        return $this->render('CodeSearchBundle:Search:index.html.php', array('res' => $res));
     }
 }
