@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Code Search Engine</title>
+        <style>
+            body {
+                font: 12px Tahoma, Arial, Helvetica, sans-serif;
+            }
+			#res {
+				font-weight: bold;
+			}
+			pre {
+				font-weight: normal;
+			}
+            pre em, pre b {
+                background-color: beige;
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
+		<script src="js/jquery-1.7.2.min.js"></script>
+		<script src="js/jquery.xml2json.min.js"></script>
+		<script src="js/jqSOAPClient.min.js"></script>
+    </head>
+    <body>
+        <h1>Code Search Engine</h1>
+        <form action="" method="get">
+            <p>Search source code for: <input type="text" value="" name="q" size="80" /> <input type="submit" value="Search" /></p>
+        </form>
+        <div id="res"></div>
+		<script>
+			$('form').submit(function(){
+				var q = $('input[name="q"]').val();
+				var sb = new SOAPObject("search");
+				var sb2 = new SOAPObject("query");
+				sb2.val(q);
+				sb.appendChild(sb2);
+				var sr = new SOAPRequest("search", sb);
+				SOAPClient.Proxy = "app_dev.php/search";
+				SOAPClient.SendRequest(sr, function(resp){
+					console.log($.xml2json(resp)); //JSON
+					$('#res').html($("<div/>").html($(resp).find('results')).text()); //decoded HTML
+				});
+				return false;
+			});
+		</script>
+    </body>
+</html>

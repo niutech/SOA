@@ -17,7 +17,7 @@
     <body>
         <h1>Code Search Engine</h1>
         <form action="" method="get">
-            <p>Search source code for: <input type="text" value="<?php echo $res->query; ?>" name="q" size="80" /> <input type="submit" value="Search" /></p>
+            <p>Search source code for: <input type="text" value="<?php if(!empty($res)) echo $res->query; ?>" name="q" size="80" /> <input type="submit" value="Search" /></p>
         </form>
         <ul>
         <?php if(!empty($res)): foreach($res->results as $item): ?>
