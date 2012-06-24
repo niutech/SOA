@@ -1,4 +1,4 @@
-/app/cache/
-/app/logs/
-/nbproject
+app/cache/
+app/logs/
+nbproject
 
