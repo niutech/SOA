@@ -1,0 +1,14 @@
+<virtualhost *:80>
+	DocumentRoot "c:/www/dev.codesearch/web/"
+	ServerName dev.codesearch
+	ServerAlias www.dev.codesearch
+    ErrorLog c:/logs/dev.codesearch.log
+    CustomLog c:/logs/dev.codesearch_custom.log common
+	<directory "c:/www/dev.codesearch/web">
+		AllowOverride All
+		Options Indexes FollowSymLinks
+		Order allow,deny
+		Allow from all
+	</directory>
+</virtualhost>
+
