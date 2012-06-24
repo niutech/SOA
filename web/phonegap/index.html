@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Code Search</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+        <link rel="stylesheet" href="jquery.mobile-1.1.0.min.css" />
+        <style>
+        	.ui-li-heading {
+				font-size: 12px;
+			}
+			.ui-li-desc {
+				font-size: 9px;
+			}
+			.ui-li-divider {
+				text-align: center;
+			}
+			#res {
+				margin-top: 25px;
+			}
+            pre em, pre b {
+                background-color: yellow;
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
+		<script src="js/cordova-1.5.0.js"></script>
+		<script src="js/jquery-1.7.2.min.js"></script>
+		<script src="js/jquery.mobile-1.1.0.min.js"></script>
+		<script src="js/jquery.xml2json.min.js"></script>
+		<script src="js/jqSOAPClient.min.js"></script>
+    </head>
+    <body>
+    	<div data-role="page">
+			<div data-role="header">
+				<h1>Code Search</h1>
+			</div>
+			<div data-role="content">
+		        <form action="" method="get">
+		        	<div data-role="fieldcontain" class="ui-hide-label">
+    					<label for="q">Search for code:</label>
+   						<input type="search" id="q" value="" placeholder="Search for class, method, variable..." />
+					</div>
+		        </form>
+		        <ul id="res" data-role="listview"></ul>
+				<script>
+					window.addEventListener("load", function() { //document.addEventListener("deviceready", function() {
+						$.mobile.allowCrossDomainPages = true;
+						$.support.cors = true;
+						$('form').submit(function() {
+							$('#res').html('<li data-role="list-divider">Searching...</li>').listview('refresh');
+							var q = $('#q').val();
+							var sb = new SOAPObject("search");
+							var sb2 = new SOAPObject("query");
+							sb2.val(q);
+							sb.appendChild(sb2);
+							var sr = new SOAPRequest("search", sb);
+							SOAPClient.Proxy = "/CodeSearchEngine/web/app_dev.php/search";
+							SOAPClient.SendRequest(sr, function(resp) {
+								resp.done(function(data) {
+									var html, body = $.xml2json(data).Body;
+									if("searchResponse" in body) {
+										var ret = body.searchResponse['return'];
+										var query = ret.query;
+										if("item" in ret.results) {
+											var items = ret.results.item;
+											html = '<li data-role="list-divider">'+items.length+' results for <em>'+query+'</em></li>';
+											for(var i=0; i<items.length; i++) {
+												html += '<li><a href="'+(items[i].url)+'" target="_blank"><h3>'+(items[i].title)+'</h3><div class="ui-li-desc">'+(items[i].code)+'</div></a></li>';
+											}
+										}
+										else html = '<li data-role="list-divider">No results for <em>'+query+'</em></li>';
+									}
+									else html = '<li data-role="list-divider">No response from web service</li>';
+									$('#res').html(html).listview('refresh');
+								});
+								resp.fail(function(xhr, status, error) {
+									$('#res').html('<li data-role="list-divider">'+status+' '+error+'</li>').listview('refresh');
+								});
+							});
+							return false;
+						});
+					}, false);
+				</script>
+			</div>
+		</div>
+    </body>
+</html>
