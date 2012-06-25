@@ -16,8 +16,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->initialize(array(
-            'l' => 'C',
-            'q' => 'serialize'
+            'query_string' => 'query=serialize&lang=C'
         ));
         
         $urlParamsMapper = new UrlParamsMapperInterfaceMock();

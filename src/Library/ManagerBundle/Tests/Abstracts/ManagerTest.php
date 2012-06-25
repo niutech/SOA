@@ -18,8 +18,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->initialize(array(
-            'q'         => 'symfony',
-            'language'  => 'php'
+            'query_string' => 'query=symfony&lang=php'
         ));
 
         $this->_manager = new ManagerAbstractMock($request);

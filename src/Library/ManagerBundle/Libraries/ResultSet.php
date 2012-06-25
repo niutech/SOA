@@ -135,13 +135,24 @@ class ResultSet
      */
     public function getEncoded()
     {
-        return json_encode(array(
+        $data = array(
             'success'   => $this->_success,
             'message'   => $this->_message,
-            'query'     => $this->_query->encode(),
             'language'  => $this->_language,
             'results'   => $this->_results
-        ));
+        );
+        
+        try 
+        {
+            $data['query'] = $this->_query->encode();
+        }
+        catch (\Exception $ex)
+        {
+            $data['success'] = false;
+            $data['message'] = $ex->getMessage();
+        }
+        
+        return json_encode($data);
     }
 
 }

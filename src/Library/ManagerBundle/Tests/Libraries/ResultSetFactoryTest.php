@@ -19,7 +19,7 @@ class ResultSetTestFactory extends \PHPUnit_Framework_TestCase
               ->setQuery('q', 'symfony');
         
         $encoded = ResultSetFactory::createUnsuccessful('Failure', $query)->getEncoded();
-        $expected = '{"success":false,"message":"Failure","query":"q=symfony&l=php","language":"php","results":null}';
+        $expected = '{"success":false,"message":"Failure","language":"php","results":null,"query":"q=symfony&l=php"}';
         
         $this->assertEquals($expected, $encoded);
     }

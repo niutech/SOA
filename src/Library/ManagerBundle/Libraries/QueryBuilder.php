@@ -17,10 +17,13 @@ class QueryBuilder
     public static function fromRequest(Request $request, UrlParamsMapperInterface $urlParamsMapper)
     {
         $query = new Query();
-
+        $params = array();
+        
+        parse_str(urldecode($request->get('query_string')), $params);
+        
         return $query
-                ->setLanguage($urlParamsMapper->getLanguageParamName(), $request->get($urlParamsMapper->getLanguageParamName()))
-                ->setQuery($urlParamsMapper->getQueryParamName(), $request->get($urlParamsMapper->getQueryParamName()));
+                ->setQuery($urlParamsMapper->getQueryParamName(), isset($params['query']) ? $params['query'] : '')
+                ->setLanguage($urlParamsMapper->getLanguageParamName(), isset($params['lang']) ? $params['lang'] : '');
     }
 
 }

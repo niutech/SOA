@@ -72,8 +72,8 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
                   ->setResults($results);
         
         $encoded = $resultSet->getEncoded();
-        $expected = '{"success":true,"message":"Everything went ok.","query":"query=Something&lang=plgpsql","language":"plgpsql",'
-                  . '"results":[{"title":"a","url":"b","code":"c","language":"d"},{"title":"1","url":"2","code":"3","language":"4"}]}';
+        $expected = '{"success":true,"message":"Everything went ok.","language":"plgpsql",'
+                  . '"results":[{"title":"a","url":"b","code":"c","language":"d"},{"title":"1","url":"2","code":"3","language":"4"}],"query":"query=Something&lang=plgpsql"}';
         
         $this->assertEquals($expected, $encoded);
     }

@@ -25,12 +25,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function getSearchResultsForCorrectQuery()
     {
-        $urlParamsMapper = new UrlParamsMapper();
-        
         $request = new Request();
         $request->initialize(array(
-            $urlParamsMapper->getQueryParamName()       => 'symfony',
-            $urlParamsMapper->getLanguageParamName()    => 'php'
+            'query_string' => 'query=symfony&lang=php'
         ));
         
         $manager = new GithubManager($request);
@@ -41,6 +38,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('php', $resultSet->getLanguage());
         $this->assertGreaterThan(0, count($resultSet->getResults()));
         $this->assertNull($resultSet->getMessage());
+        $this->assertEquals('q=symfony&language=php', $resultSet->getQuery()->encode());
     }
     
     /**
@@ -48,12 +46,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function getSearchResultsForIncorrectQuery()
     {
-        $urlParamsMapper = new UrlParamsMapper();
-        
         $request = new Request();
         $request->initialize(array(
-            $urlParamsMapper->getQueryParamName()       => sha1('absfduyfanbcsgfsacgf'),
-            $urlParamsMapper->getLanguageParamName()    => 'phpphpphp'
+            'query_string' => 'query=absfduyfanbcsgfsacgf&lang=phpphpphp'
         ));
         
         $manager = new GithubManager($request);
@@ -64,6 +59,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('phpphpphp', $resultSet->getLanguage());
         $this->assertCount(0, $resultSet->getResults());
         $this->assertNull($resultSet->getMessage());
+        $this->assertEquals('q=absfduyfanbcsgfsacgf&language=phpphpphp', $resultSet->getQuery()->encode());
     }
     
     /**
@@ -87,5 +83,6 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($resultSet->getLanguage());
         $this->assertCount(0, $resultSet->getResults());
         $this->assertNull($resultSet->getMessage());
+        $this->assertEquals('q=&language=', $resultSet->getQuery()->encode());
     }
 }

@@ -13,18 +13,18 @@ class SearchController extends Controller
     
     public function indexAction(Request $request)
     {
-        $manager = new GithubManager($request);
         
         try
         {
-            $result = $manager->getSearchResults();
+            $manager = new GithubManager($request);
+            $resultSet = $manager->getSearchResults();
         }
-        catch (\Exception $ex)
+        catch (\Library\ManagerBundle\Exception $ex)
         {
-            $result = ResultSetFactory::createUnsuccessful($ex->getMessage(), $manager->getQuery());
+            $resultSet = ResultSetFactory::createUnsuccessful($ex->getMessage(), $manager->getQuery());
         }
         
-        $response = new Response($result->getEncoded());
+        $response = new Response($resultSet->getEncoded());
         $response->headers->set('Content-Type', 'application/json');
         
         return $response;
