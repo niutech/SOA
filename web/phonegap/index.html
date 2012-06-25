@@ -6,83 +6,146 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" /> 
         <link rel="stylesheet" href="jquery.mobile-1.1.0.min.css" />
         <style>
-        	.ui-li-heading {
-				font-size: 12px;
-			}
-			.ui-li-desc {
-				font-size: 9px;
-			}
-			.ui-li-divider {
-				text-align: center;
-			}
-			#res {
-				margin-top: 25px;
-			}
+            .ui-field-contain {
+                display: inline-block;
+                width: 49%;
+                vertical-align: middle;
+            }
+            .ui-field-contain .ui-input-search {
+                width: 80%;
+            }
+            .ui-field-contain .ui-select {
+                display: inline-block;
+                width: 60%;
+            }
+            .ui-field-contain > .ui-btn-block {
+                display: inline-block;
+                width: 30%;
+            }
+            .ui-li-heading {
+                font-size: 12px;
+            }
+            .ui-li-desc {
+                font-size: 9px;
+            }
+            .ui-li-divider {
+                text-align: center;
+            }
+            #res {
+                margin-top: 25px;
+            }
             pre em, pre b {
                 background-color: yellow;
                 font-weight: normal;
                 font-style: normal;
             }
+
+            @media all and (max-width: 700px) {
+                .ui-field-contain {
+                    width: 100%;
+                }
+                .ui-field-contain .ui-input-search {
+                    width: 80%;
+                }
+                .ui-field-contain .ui-select {
+                    width: 60%;
+                }
+                .ui-field-contain > .ui-btn-block {
+                    width: 30%;
+                }
+            }
         </style>
-		<script src="js/cordova-1.5.0.js"></script>
-		<script src="js/jquery-1.7.2.min.js"></script>
-		<script src="js/jquery.mobile-1.1.0.min.js"></script>
-		<script src="js/jquery.xml2json.min.js"></script>
-		<script src="js/jqSOAPClient.min.js"></script>
+        <script src="js/cordova-1.5.0.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.mobile-1.1.0.min.js"></script>
+        <script src="js/jquery.xml2json.min.js"></script>
+        <script src="js/jqSOAPClient.min.js"></script>
     </head>
     <body>
-    	<div data-role="page">
-			<div data-role="header">
-				<h1>Code Search</h1>
-			</div>
-			<div data-role="content">
-		        <form action="" method="get">
-		        	<div data-role="fieldcontain" class="ui-hide-label">
-    					<label for="q">Search for code:</label>
-   						<input type="search" id="q" value="" placeholder="Search for class, method, variable..." />
-					</div>
-		        </form>
-		        <ul id="res" data-role="listview"></ul>
-				<script>
-					window.addEventListener("load", function() { //document.addEventListener("deviceready", function() {
-						$.mobile.allowCrossDomainPages = true;
-						$.support.cors = true;
-						$('form').submit(function() {
-							$('#res').html('<li data-role="list-divider">Searching...</li>').listview('refresh');
-							var q = $('#q').val();
-							var sb = new SOAPObject("search");
-							var sb2 = new SOAPObject("query");
-							sb2.val(q);
-							sb.appendChild(sb2);
-							var sr = new SOAPRequest("search", sb);
-							SOAPClient.Proxy = "/CodeSearchEngine/web/app_dev.php/search";
-							SOAPClient.SendRequest(sr, function(resp) {
-								resp.done(function(data) {
-									var html, body = $.xml2json(data).Body;
-									if("searchResponse" in body) {
-										var ret = body.searchResponse['return'];
-										var query = ret.query;
-										if("item" in ret.results) {
-											var items = ret.results.item;
-											html = '<li data-role="list-divider">'+items.length+' results for <em>'+query+'</em></li>';
-											for(var i=0; i<items.length; i++) {
-												html += '<li><a href="'+(items[i].url)+'" target="_blank"><h3>'+(items[i].title)+'</h3><div class="ui-li-desc">'+(items[i].code)+'</div></a></li>';
-											}
-										}
-										else html = '<li data-role="list-divider">No results for <em>'+query+'</em></li>';
-									}
-									else html = '<li data-role="list-divider">No response from web service</li>';
-									$('#res').html(html).listview('refresh');
-								});
-								resp.fail(function(xhr, status, error) {
-									$('#res').html('<li data-role="list-divider">'+status+' '+error+'</li>').listview('refresh');
-								});
-							});
-							return false;
-						});
-					}, false);
-				</script>
-			</div>
-		</div>
+        <div data-role="page">
+            <div data-role="header">
+                <h1>Code Search</h1>
+            </div>
+            <div data-role="content">
+                <form action="" method="get">
+                    <div data-role="fieldcontain">
+                        <input type="search" id="q" data-mini="true" value="" placeholder="Search for class, method, variable..." />
+                    </div>
+                    <div data-role="fieldcontain">
+                        <select id="lang" data-mini="true">
+                            <option value="">Any language</option>
+                            <option value="ActionScript">ActionScript</option>
+                            <option value="C">C</option>
+                            <option value="C#">C#</option>
+                            <option value="C++">C++</option>
+                            <option value="Common Lisp">Common Lisp</option>
+                            <option value="CSS">CSS</option>
+                            <option value="Diff">Diff</option>
+                            <option value="Emacs Lisp">Emacs Lisp</option>
+                            <option value="Erlang">Erlang</option>
+                            <option value="Haskell">Haskell</option>
+                            <option value="HTML">HTML</option>
+                            <option value="Java">Java</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="Lua">Lua</option>
+                            <option value="Objective-C">Objective-C</option>
+                            <option value="Perl">Perl</option>
+                            <option value="PHP">PHP</option>
+                            <option value="Python">Python</option>
+                            <option value="Ruby">Ruby</option>
+                            <option value="Scala">Scala</option>
+                            <option value="Scheme">Scheme</option>
+                            <option value="TeX">TeX</option>
+                            <option value="XML">XML</option>
+                        </select>
+                        <input type="submit" data-mini="true" data-icon="arrow-r" data-iconpos="right" value="Search" />
+                    </div>
+                </form>
+                <ul id="res" data-role="listview"></ul>
+                <script>
+                    window.addEventListener("load", function() { //document.addEventListener("deviceready", function() {
+                        $.mobile.allowCrossDomainPages = true;
+                        $.support.cors = true;
+                        $('form').submit(function() {
+                            $('#res').html('<li data-role="list-divider">Searching...</li>').listview('refresh');
+                            var query = $('#q').val();
+                            var lang = $('#lang').val();
+                            var sb = new SOAPObject("search");
+                            var sbQuery = new SOAPObject("query");
+                            sbQuery.val(query);
+                            sb.appendChild(sbQuery);
+                            var sbLang = new SOAPObject("language");
+                            sbLang.val(lang);
+                            sb.appendChild(sbLang);
+                            var sr = new SOAPRequest("search", sb);
+                            SOAPClient.Proxy = "/CodeSearchEngine/web/search";
+                            SOAPClient.SendRequest(sr, function(resp) {
+                                resp.done(function(data) {
+                                    var html, body = $.xml2json(data).Body;
+                                    if("searchResponse" in body) {
+                                        var ret = body.searchResponse['return'];
+                                        var query = ret.query;
+                                        if("item" in ret.results) {
+                                            var items = ret.results.item;
+                                            html = '<li data-role="list-divider">'+items.length+' results for <em>'+query+'</em></li>';
+                                            for(var i=0; i<items.length; i++) {
+                                                html += '<li><a href="'+(items[i].url)+'" target="_blank"><h3>'+(items[i].title)+'</h3><div class="ui-li-desc">Language: '+(items[i].language)+'</div><div class="ui-li-desc"><pre>'+(items[i].code)+'</pre></div></a></li>';
+                                            }
+                                        }
+                                        else html = '<li data-role="list-divider">No results for <em>'+query+'</em></li>';
+                                    }
+                                    else html = '<li data-role="list-divider">No response from web service</li>';
+                                    $('#res').html(html).listview('refresh');
+                                });
+                                resp.fail(function(xhr, status, error) {
+                                    $('#res').html('<li data-role="list-divider">'+status+' '+error+'</li>').listview('refresh');
+                                });
+                            });
+                            return false;
+                        });
+                    }, false);
+                </script>
+            </div>
+        </div>
     </body>
 </html>
