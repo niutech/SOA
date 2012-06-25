@@ -112,8 +112,8 @@ class ResultSet
     {
         foreach ($results as $result)
         {
-            if ('Library\ManagerBundle\Libraries\Result' !== get_class($result))
-                throw new ManagerException('Each element of ResultSet must be an instance of Library\ManagerBundle\Libraries\Result');
+            if (!in_array(get_class($result), array('Library\ManagerBundle\Libraries\Result', 'stdClass')))
+                throw new ManagerException('Each element of ResultSet must be either an instance of Library\ManagerBundle\Libraries\Result or \stdClass');
         }
         
         $this->_results = $results;

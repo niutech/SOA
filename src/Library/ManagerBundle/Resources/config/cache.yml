@@ -1,0 +1,3 @@
+search_cache:
+  expiration: 86400
+  directory: github

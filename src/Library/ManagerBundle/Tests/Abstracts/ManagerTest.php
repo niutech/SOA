@@ -18,7 +18,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->initialize(array(
-            'query_string' => 'query=symfony&lang=php'
+            'query_string' => 'query=mock-query-123456&lang=php'
         ));
 
         $this->_manager = new ManagerAbstractMock($request);
@@ -31,7 +31,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     {
         $query = new Query();
         $query->setLanguage('language', 'php')
-                ->setQuery('q', 'symfony');
+                ->setQuery('q', 'mock-query-123456');
 
         $this->assertEquals($query, $this->_manager->getQuery());
     }
@@ -50,7 +50,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         
         $query = new Query();
         $query->setLanguage('language', 'php')
-                ->setQuery('q', 'symfony');
+                ->setQuery('q', 'mock-query-123456');
         
         $this->assertEquals($query, $resultSet->getQuery());
         $this->assertEquals('php', $resultSet->getLanguage());
