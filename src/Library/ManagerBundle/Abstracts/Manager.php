@@ -33,15 +33,19 @@ abstract class Manager
     }
     
     /**
-     * @return ResultSet 
+     * @return \Library\ManagerBundle\Libraries\ResultSet 
      */
     public function getSearchResults()
     {
-        return $this->_createResultSet(
-            $this->_getParser()->parse(
-                $this->_curl->getPage($this->_getBaseUrl() . $this->_query->encode())
-            )
+        $results = $this->_getParser()->parse(
+            $this->_curl->getPage($this->_getBaseUrl() . $this->_query->encode())
         );
+        
+        $resultSet = new ResultSet(count($results) > 0);
+        
+        return $resultSet
+                ->setQuery($this->_query)
+                ->setResults($results);
     }
     
     /**
@@ -51,15 +55,6 @@ abstract class Manager
     public function getQuery()
     {
         return $this->_query;
-    }
-    
-    private function _createResultSet(array $parsedData)
-    {
-        $resultSet = new ResultSet(true);
-        
-        // @todo Convert data from array
-        
-        return $resultSet;
     }
     
     /**

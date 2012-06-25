@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\ManagerBundle\Tests;
+namespace Library\ManagerBundle\Tests\Libraries;
 
 use \Library\ManagerBundle\Libraries\Result;
 use \Library\ManagerBundle\Libraries\Query;
@@ -33,7 +33,7 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     /**
      * @test 
      */
-    public function settersWorkCorrectly()
+    public function settersAndGettersWorkCorrectly()
     {
         $message = 'Everything went ok.';
         $query = $this->_createQuery();
@@ -47,29 +47,11 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
                   ->setQuery($query)
                   ->setResults($results);
         
-        $refClass = new \ReflectionClass($resultSet);
-        
-        $successProperty = $refClass->getProperty('_success');
-        $successProperty->setAccessible(true);
-        
-        $messageProperty = $refClass->getProperty('_message');
-        $messageProperty->setAccessible(true);
-        
-        $queryProperty = $refClass->getProperty('_query');
-        $queryProperty->setAccessible(true);
-        
-        $languageProperty = $refClass->getProperty('_language');
-        $languageProperty->setAccessible(true);
-        
-        $resultsProperty = $refClass->getProperty('_results');
-        $resultsProperty->setAccessible(true);
-        
-        
-        $this->assertTrue($successProperty->getValue($resultSet));
-        $this->assertEquals($message, $messageProperty->getValue($resultSet));
-        $this->assertEquals($query, $queryProperty->getValue($resultSet));
-        $this->assertEquals('plgpsql', $languageProperty->getValue($resultSet));
-        $this->assertEquals($results, $resultsProperty->getValue($resultSet));
+        $this->assertTrue($resultSet->getSuccess());
+        $this->assertEquals($message, $resultSet->getMessage());
+        $this->assertEquals($query, $resultSet->getQuery());
+        $this->assertEquals('plgpsql', $resultSet->getLanguage());
+        $this->assertEquals($results, $resultSet->getResults());
     }
     
     /**

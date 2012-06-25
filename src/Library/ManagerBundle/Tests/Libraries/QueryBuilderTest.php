@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\ManagerBundle\Tests;
+namespace Library\ManagerBundle\Tests\Libraries;
 
 use Symfony\Component\HttpFoundation\Request;
 use \Library\ManagerBundle\Libraries\QueryBuilder;

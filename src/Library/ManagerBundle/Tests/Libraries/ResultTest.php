@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\ManagerBundle\Tests;
+namespace Library\ManagerBundle\Tests\Libraries;
 
 use \Library\ManagerBundle\Libraries\Result;
 

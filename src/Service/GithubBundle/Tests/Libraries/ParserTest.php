@@ -51,6 +51,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             array(
                 'php_symfony',
             ),
+            array(
+                'empty_result',
+            ),
+            array(
+                'empty_query_empty_result',
+            ),
         );
     }
 }

@@ -4,6 +4,7 @@ namespace Service\GithubBundle\Libraries;
 
 use \Library\ParserBundle\Interfaces\Parser as ParserInterface;
 use \Library\ManagerBundle\Libraries\Result;
+
 class Parser implements ParserInterface
 {
 

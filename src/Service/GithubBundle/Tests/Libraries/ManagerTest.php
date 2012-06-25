@@ -4,6 +4,7 @@ namespace Service\GithubBundle\Tests\Libraries;
 
 use Symfony\Component\HttpFoundation\Request;
 use \Library\ManagerBundle\Libraries\Query;
+use \Library\ManagerBundle\Libraries\ResultSet;
 use \Service\GithubBundle\Libraries\Manager as GithubManager; 
 use \Service\GithubBundle\Libraries\UrlParamsMapper;
 
@@ -20,9 +21,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @test
+     * @test 
      */
-    public function getQuery()
+    public function getSearchResultsForCorrectQuery()
     {
         $urlParamsMapper = new UrlParamsMapper();
         
@@ -32,30 +33,59 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             $urlParamsMapper->getLanguageParamName()    => 'php'
         ));
         
-        $query = new Query();
-        $query->setLanguage($urlParamsMapper->getLanguageParamName(), 'php')
-              ->setQuery($urlParamsMapper->getQueryParamName(), 'symfony');
-        
         $manager = new GithubManager($request);
         
-        $this->assertEquals($query, $manager->getQuery());
+        $resultSet = $manager->getSearchResults();
+        
+        $this->assertTrue($resultSet->getSuccess());
+        $this->assertEquals('php', $resultSet->getLanguage());
+        $this->assertGreaterThan(0, count($resultSet->getResults()));
+        $this->assertNull($resultSet->getMessage());
     }
     
     /**
-     * @tdstxx 
+     * @test 
      */
-    public function getSearchResults()
+    public function getSearchResultsForIncorrectQuery()
     {
         $urlParamsMapper = new UrlParamsMapper();
         
         $request = new Request();
         $request->initialize(array(
-            $urlParamsMapper->getQueryParamName()       => 'symfony',
-            $urlParamsMapper->getLanguageParamName()    => 'php'
+            $urlParamsMapper->getQueryParamName()       => sha1('absfduyfanbcsgfsacgf'),
+            $urlParamsMapper->getLanguageParamName()    => 'phpphpphp'
         ));
         
         $manager = new GithubManager($request);
         
-        echo $manager->getSearchResults();
+        $resultSet = $manager->getSearchResults();
+        
+        $this->assertFalse($resultSet->getSuccess());
+        $this->assertEquals('phpphpphp', $resultSet->getLanguage());
+        $this->assertCount(0, $resultSet->getResults());
+        $this->assertNull($resultSet->getMessage());
+    }
+    
+    /**
+     * @test 
+     */
+    public function getSearchResultsEmptyQuery()
+    {
+        $urlParamsMapper = new UrlParamsMapper();
+        
+        $request = new Request();
+        $request->initialize(array(
+            $urlParamsMapper->getQueryParamName()       => '',
+            $urlParamsMapper->getLanguageParamName()    => ''
+        ));
+        
+        $manager = new GithubManager($request);
+        
+        $resultSet = $manager->getSearchResults();
+        
+        $this->assertFalse($resultSet->getSuccess());
+        $this->assertEmpty($resultSet->getLanguage());
+        $this->assertCount(0, $resultSet->getResults());
+        $this->assertNull($resultSet->getMessage());
     }
 }

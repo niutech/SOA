@@ -46,6 +46,14 @@ class ResultSet
     }
     
     /**
+     * @return bool
+     */
+    public function getSuccess()
+    {
+        return $this->_success;
+    }
+    
+    /**
      * 
      * @param string $message
      * @return \Library\ManagerBundle\Libraries\ResultSet 
@@ -55,6 +63,14 @@ class ResultSet
         $this->_message = $message;
         
         return $this;
+    }
+    
+    /**
+    * @return string
+    */
+    public function getMessage()
+    {
+        return $this->_message;
     }
     
     /**
@@ -70,6 +86,22 @@ class ResultSet
         return $this;
     }
     
+    /**
+     * @return \Library\ManagerBundle\Libraries\Query
+     */
+    public function getQuery()
+    {
+        return $this->_query;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->_language;
+    }
+
     /**
      *
      * @param array $results
@@ -89,6 +121,14 @@ class ResultSet
         return $this;
     }
 
+    /**
+     * @return \Library\ManagerBundle\Libraries\Result[]
+     */
+    public function getResults()
+    {
+        return $this->_results;
+    }
+    
     /**
      *
      * @return string
