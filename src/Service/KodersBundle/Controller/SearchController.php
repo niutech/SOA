@@ -1,8 +1,8 @@
 <?php
 
-namespace Service\GithubBundle\Controller;
+namespace Service\KodersBundle\Controller;
 
-use Service\GithubBundle\Libraries\Manager as GithubManager;
+use Service\KodersBundle\Libraries\Manager as KodersManager;
 use \Library\ManagerBundle\Abstracts\Controller as ControllerAbstract;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,7 +11,7 @@ class SearchController extends ControllerAbstract
 
     protected function _getManager(Request $request)
     {
-        return new GithubManager($request);
+        return new KodersManager($request);
     }
 
 }

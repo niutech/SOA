@@ -1,0 +1,3 @@
+ServiceKodersBundle_Search:
+    pattern:  /search/koders/{query_string}
+    defaults: { _controller: ServiceKodersBundle:Search:index, query_string: 'query=&lang=' }

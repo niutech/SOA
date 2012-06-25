@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Library\CurlBundle\LibraryCurlBundle(),
             new Library\ParserBundle\LibraryParserBundle(),
             new Library\ManagerBundle\LibraryManagerBundle(),
+            new Service\KodersBundle\ServiceKodersBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

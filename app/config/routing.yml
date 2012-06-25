@@ -1,3 +1,7 @@
+ServiceKodersBundle:
+    resource: "@ServiceKodersBundle/Resources/config/routing.yml"
+    prefix:   /
+
 LibraryManagerBundle:
     resource: "@LibraryManagerBundle/Resources/config/routing.yml"
     prefix:   /

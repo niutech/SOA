@@ -1,0 +1,899 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="pageHead" profile="http://a9.com/-/spec/opensearch/1.1/"><title>
+	Koders Code Search: Search
+</title> <meta  name="ROBOTS"  content="NOARCHIVE"  /> 
+		<link href="/skins/koders/styles.css" type="text/css" rel="stylesheet" /><!--[if IE]><link href="/skins/koders/iestyles.css" type="text/css" rel="stylesheet" /><![endif]-->
+<link href="/Special/Stylesheets/koders.com.css" type="text/css" rel="stylesheet" /><link href="http://www.koders.com/search/KodersDescriptionOS1_1.xml"  title="Koders search" rel="search" type="application/opensearchdescription+xml" ><link href="http://www.koders.com/search/KodersDescriptionOS1_1Proj.xml"  title="Koders Projects search" rel="search" type="application/opensearchdescription+xml" ><meta name="description" content="The largest open source code search engine. Find, download and reuse open source code examples, projects and snippets in over 30 programming languages." />
+    <link href="/skins/koders/home-page.css" type="text/css" rel="stylesheet" />
+    <link href="/skins/enterprise/enterprise-home-page.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="/scripts/home-page-tabs.js"></script>
+</head>
+<body class="home results">
+<!-- media header starts -->
+<STYLE type=text/css media=all>
+
+@import url( http://media.blackducksoftware.com/koders/styles/koders_interface.css );
+
+</STYLE>
+
+
+
+
+
+
+
+<!-- Style for IE 6 -->
+
+<!--[if gte IE 6]>
+
+<style type="text/css">
+
+#nav_container {
+
+	MARGIN-TOP: -64px;
+
+	FONT-FAMILY: Arial;
+
+	POSITION: absolute;
+
+	right: 25px;
+
+	z-index:1;
+
+}
+
+UL.main_nav LI UL {
+
+	WIDTH: 150px; TOP: 20px; BACKGROUND-COLOR: #e6e6e6
+
+}
+
+UL.main_nav LI UL LI IMG {
+
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; MARGIN: -10px; WIDTH: 7px; PADDING-TOP: -10px
+
+}
+
+</style>
+
+<![endif]-->
+
+
+
+<SCRIPT type=text/javascript>
+
+function urldecode( str ) {
+        var histogram = {}, ret = str.toString(), unicodeStr='', hexEscStr='';
+    
+    var replacer = function(search, replace, str) {
+        var tmp_arr = [];
+        tmp_arr = str.split(search);
+        return tmp_arr.join(replace);
+    };
+    
+    // The histogram is identical to the one in urlencode.
+    histogram["'"]   = '%27';
+    histogram['(']   = '%28';
+    histogram[')']   = '%29';
+    histogram['*']   = '%2A';
+    histogram['~']   = '%7E';
+    histogram['!']   = '%21';
+    histogram['%20'] = '+';
+    histogram['\u00DC'] = '%DC';
+    histogram['\u00FC'] = '%FC';
+    histogram['\u00C4'] = '%D4';
+    histogram['\u00E4'] = '%E4';
+    histogram['\u00D6'] = '%D6';
+    histogram['\u00F6'] = '%F6';
+    histogram['\u00DF'] = '%DF'; 
+    histogram['\u20AC'] = '%80';
+    histogram['\u0081'] = '%81';
+    histogram['\u201A'] = '%82';
+    histogram['\u0192'] = '%83';
+    histogram['\u201E'] = '%84';
+    histogram['\u2026'] = '%85';
+    histogram['\u2020'] = '%86';
+    histogram['\u2021'] = '%87';
+    histogram['\u02C6'] = '%88';
+    histogram['\u2030'] = '%89';
+    histogram['\u0160'] = '%8A';
+    histogram['\u2039'] = '%8B';
+    histogram['\u0152'] = '%8C';
+    histogram['\u008D'] = '%8D';
+    histogram['\u017D'] = '%8E';
+    histogram['\u008F'] = '%8F';
+    histogram['\u0090'] = '%90';
+    histogram['\u2018'] = '%91';
+    histogram['\u2019'] = '%92';
+    histogram['\u201C'] = '%93';
+    histogram['\u201D'] = '%94';
+    histogram['\u2022'] = '%95';
+    histogram['\u2013'] = '%96';
+    histogram['\u2014'] = '%97';
+    histogram['\u02DC'] = '%98';
+    histogram['\u2122'] = '%99';
+    histogram['\u0161'] = '%9A';
+    histogram['\u203A'] = '%9B';
+    histogram['\u0153'] = '%9C';
+    histogram['\u009D'] = '%9D';
+    histogram['\u017E'] = '%9E';
+    histogram['\u0178'] = '%9F';
+ 
+    for (unicodeStr in histogram) {
+        hexEscStr = histogram[unicodeStr]; // Switch order when decoding
+        ret = replacer(hexEscStr, unicodeStr, ret); // Custom replace. No regexing
+    }
+    
+    // End with decodeURIComponent, which most resembles PHP's encoding functions
+    ret = decodeURIComponent(ret);
+ 
+    return ret;
+}
+
+function setsearchterm()
+{
+  name = "s";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  document.getElementById('searchbox').value = urldecode(results[1]);
+
+}
+
+function setsearchscope()
+{
+  name = "scope";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+
+//set the scope by default
+  document.getElementById('searchscope').value = results[1];
+
+//if we get told to clear scope, clear it.
+  action = "action";
+  action = action.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexA = "[\\?&]"+action+"=([^&#]*)";
+  var regexAct = new RegExp( regexA );
+  var actionresultstemp = regexAct.exec( window.location.href );
+  var actionresults = actionresultstemp[1];
+
+if (actionresults.match("ClearScope"))
+{
+  document.getElementById('searchscope').value = "";
+}
+}
+
+function setsearchlang()
+{
+  name = "la";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  document.getElementById('__ctl04_la').value = results[1];
+
+}
+
+function setsearchlic()
+{
+  name = "li";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  document.getElementById('__ctl04_li').value = results[1];
+
+}
+
+
+var linkPrefix = "http://www.koders.com/ks/search/KodersMozillaPlugin_";
+
+function AddKodersSearch(name)
+{
+  if ((typeof window.sidebar == "object") && (typeof
+  window.sidebar.addSearchEngine == "function"))
+  {
+	var pluginUrl = linkPrefix + name + ".src"; 
+	var imageUrl  = linkPrefix + name + ".png"; 
+	//alert(pluginUrl + "\n" + imageUrl);
+	
+    window.sidebar.addSearchEngine(
+	  pluginUrl,
+      imageUrl,
+      name,
+      "Software Development");
+  }
+  else
+  {
+	alert("Your browser is not currently supported. Please contact support@koders.com if you would like further assistence.");
+  }
+}
+
+function TriggerAdd() {
+	var selectBox = document.getElementById('MozillaPluginSelect');
+	var selectedValue = selectBox.options[selectBox.selectedIndex].value + "";
+	if(selectedValue.length > 0) {
+		AddKodersSearch(selectedValue);
+	}
+}
+    
+
+function jsinit() {
+setsearchterm();
+setsearchlang();
+setsearchlic();
+setsearchscope();
+init_sBG(true);
+}
+
+window.onload = jsinit
+
+					</SCRIPT>
+
+<!-- following two given for nav --><!-- <script src='/themes/blackduck/globalScript.js' type=text/javascript></script> -->
+
+<SCRIPT 
+
+src="http://media.blackducksoftware.com/koders/scripts/twoLevelScript.js" 
+
+type=text/javascript></SCRIPT>
+
+<LINK title="rss 2.0" href="/rss.xml" type=application/rss+xml rel=alternate>
+
+<META content="MSHTML 6.00.2900.3527" name=GENERATOR></HEAD>
+
+<BODY>
+
+<TABLE id=container cellSpacing=0 cellPadding=0 width="100%" align=center 
+
+  border=0><TBODY>
+
+  <TR>
+
+    <TD vAlign=top width="100%" height=59>
+
+      <DIV class=header_row>
+
+      <TABLE class=header_row id=header_table cellSpacing=0 cellPadding=0 
+
+      width="100%" height=59 border=0>
+
+        <TBODY>
+
+        <TR>
+
+          <TD width=175 rowSpan=2><A 
+
+            id=duck_home_link href="/"><IMG 
+
+            height=59 width=175 alt="" 
+
+            src="http://media.blackducksoftware.com/koders/images/koders_logo_sm.gif" 
+
+            ></A> </TD>
+
+          <TD height=59>
+
+            <DIV id=search_field>
+
+
+
+            <form action="/default.aspx" method="get"> 
+
+			<INPUT value=Search
+
+            name=s id="searchbox" size="35" maxlength="100"> <INPUT type=image 
+
+            src="http://media.blackducksoftware.com/koders/images/search_carat_bl.gif" 
+
+            name=search><br>
+
+			<select name="la" id="__ctl04_la" class="language_select_box">
+	<option value="*">All Languages</option>
+	<option value="ActionScript">ActionScript</option>
+	<option value="Ada">Ada</option>
+	<option value="ASP">ASP</option>
+	<option value="ASP.NET">ASP.NET</option>
+	<option value="Assembler">Assembler</option>
+	<option value="C">C</option>
+	<option value="C#">C#</option>
+	<option value="Cpp">C++</option>
+	<option value="Cobol">Cobol</option>
+	<option value="ColdFusion">ColdFusion</option>
+	<option value="Delphi">Delphi</option>
+	<option value="Eiffel">Eiffel</option>
+	<option value="Erlang">Erlang</option>
+	<option value="Fortran">Fortran</option>
+	<option value="Java">Java</option>
+	<option value="JavaScript">JavaScript</option>
+	<option value="JSP">JSP</option>
+	<option value="Lisp">Lisp</option>
+	<option value="Lua">Lua</option>
+	<option value="Mathematica">Mathematica</option>
+	<option value="Matlab">Matlab</option>
+	<option value="ObjectiveC">ObjectiveC</option>
+	<option value="Perl">Perl</option>
+	<option value="PHP">PHP</option>
+	<option value="Prolog">Prolog</option>
+	<option value="Python">Python</option>
+	<option value="Ruby">Ruby</option>
+	<option value="Scheme">Scheme</option>
+	<option value="Smalltalk">Smalltalk</option>
+	<option value="SQL">SQL</option>
+	<option value="Tcl">Tcl</option>
+	<option value="VB">VB</option>
+	<option value="VB.NET">VB.NET</option>
+</select>
+        <select name="li" id="__ctl04_li" class="select_box">
+	<option value="*">All Licenses</option>
+	<option value="AFL">Academic Free License</option>
+	<option value="AL20">Apache License, Version 2.0</option>
+	<option value="ASL">Apache Software License</option>
+	<option value="APSL">Apple Public Source License</option>
+	<option value="BSD">BSD License</option>
+	<option value="CPL">Common Public License</option>
+	<option value="EPL10">Eclipse Public License v1.0</option>
+	<option value="GTPL">Globus Toolkit Public License</option>
+	<option value="GPL">GNU General Public License v1 v2 v3</option>
+	<option value="LGPL">GNU Lesser General Public License</option>
+	<option value="IBMPL">IBM Public License</option>
+	<option value="IOSL">Intel Open Source License</option>
+	<option value="MSCL">Microsoft Community License</option>
+	<option value="MSPL">Microsoft Permissive License</option>
+	<option value="MSRL">Microsoft Reference License</option>
+	<option value="MSVSSDK">Microsoft Visual Studio SDK License</option>
+	<option value="MITD">MIT Derived License</option>
+	<option value="MPL10">Mozilla Public License Version 1.0</option>
+	<option value="MPL11">Mozilla Public License Version 1.1</option>
+	<option value="NPL10">Netscape Public License, Version 1.0</option>
+	<option value="NPL11">Netscape Public License, Version 1.1</option>
+	<option value="OSL">Open Software License</option>
+	<option value="PHPL">PHP License</option>
+	<option value="PSFL">Python Software Foundation License</option>
+	<option value="SL">Sleepycat Software Product License</option>
+	<option value="SPL">Sun Public License</option>
+	<option value="W3C">W3C Software License</option>
+	<option value="ZLL">zlib/libpng License</option>
+	<option value="ZPL">Zope Public License</option>
+</select>
+
+	    <input type="hidden" name="scope" id="searchscope" value="">
+
+</FORM></DIV></TD></TR>
+
+        <TR><TD height=0>
+
+            <DIV id=nav_container>
+
+            <UL class=main_nav>
+
+              <LI class=top_level><A 
+              href="http://corp.koders.com/about/"><IMG class=rollovers 
+              id=learn_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/about_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="About Koders.com" 
+                href="http://corp.koders.com/about/">About</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Contact Us" 
+                href="http://corp.koders.com/about#Contact"> 
+                  Contact</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Site Map" 
+                href="http://corp.koders.com/sitemap"> 
+                  Site Map</A> </div>
+                </LI>
+              </ul></li>
+			  
+              <LI class=top_level><A 
+              href="http://corp.koders.com/resources"><IMG 
+              class=rollovers id=resources_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/resources_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="Overview" 
+                href="http://corp.koders.com/resources"> 
+                  Overview</A>                    </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Open Source License Info" 
+                href="http://corp.koders.com/resources/license-info">License Info</A> 
+                  </div>
+                </LI><LI>
+                  <div align="left"><A title="Top Searches" 
+                href="http://corp.koders.com/resources/top-searches">Top Searches</A> 
+                  </div>
+                </LI><LI>
+                  <div align="left"><A title="AD Search" 
+                href="http://corp.koders.com/resources/widgets">Add search to your site</A> 
+                  </div>
+                </LI><LI>
+                  <div align="left"><A title="feeback" 
+                href="http://corp.koders.com/resources/feedback">Feedback</A> 
+                  </div>
+                </LI>
+	</ul></li>
+              <LI class=top_level><A 
+              href="http://corp.koders.com/downloads"><IMG 
+              class=rollovers id=products_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/community_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="Overview" 
+                href="http://corp.koders.com/downloads"> 
+                  Overview</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Demo" 
+                href="http://corp.koders.com/downloads/demo">Demo 
+                  </A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Download Plugins" 
+                href="http://corp.koders.com/downloads/plugins">Plugins</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Download Plugins" 
+                href="http://corp.koders.com/downloads/plugins#IDE">IDE Plugins</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Download Plugins" 
+                href="http://corp.koders.com/downloads/plugins#browser">Browser Plugins</A> </div>
+                </LI>
+              </ul></li>
+              <LI class=top_level><A 
+              href="http://corp.koders.com/support/overview"><IMG class=rollovers 
+              id=news_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/support_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="Customer Support" 
+                href="http://corp.koders.com/support/overview">Overview</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Getting Started Guide" 
+                href="http://corp.koders.com/support/getting-started">Getting Started Guide</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Search Examples" 
+                href="http://corp.koders.com/support/getting-started#search">Search Examples</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Contact Support" 
+                href="http://corp.koders.com/support/contact-support">Contact Support</A> </div>
+                </LI>
+                
+		</ul></li>
+              <LI class=top_level><A 
+              href="http://www.blackducksoftware.com/" target="_blank"><IMG 
+              class=rollovers id=blackduck_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/bds_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/" title="An overview of Black Duck Software" target="_blank">About Black Duck Software</A></div>
+                </LI>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/black-duck-suite" title="The Black Duck Suite" target="_blank">The Black Duck Suite</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/oss" 
+                title="OSS Page" target="_blank">Open Source Resource Center</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/resources" title="Black Duck Knowledge Center" target="_blank">Black Duck Knowledge Center</A> </div>
+                </LI><LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/about/contact" title="Contact" target="_blank">Contact</A> </div>
+                </LI>
+              </UL></LI>
+              <LI class=top_level><A 
+              href="http://corp.koders.com/submitproject"><IMG 
+              src="http://media.blackducksoftware.com/koders/images/submit_button_top.gif" alt="" name="company_rollover" border="0" class=rollovers 
+              id=company_rollover></A></LI>
+</UL></DIV></TD>
+
+        </TR></TBODY></TABLE></DIV></TD></TD></TR>
+
+		
+
+  <TR>
+
+    <TD vAlign=top align=left height=7 bgcolor=#006699 colSpan=2></TD></TR>
+
+  
+
+  
+
+  </TBODY></TABLE>
+
+   <div align="center"><a href="http://www.blackducksoftware.com/code-sight/download" target="_blank"><img src="http://media.blackducksoftware.com/koders/header/ads/free_728x45.gif" alt="A" vspace="10" border="0"></a>
+
+   </div>
+
+
+<!-- media header ends -->
+
+
+<form id="f" name="f" method="get" action="default.aspx" style="margin:0;padding:0;height:100%;">		
+    <div class="content_wrapper">
+    	
+	    
+	    
+		
+        
+        
+		
+        
+	
+	    
+	        <div class="search_wrapper">
+		        
+
+
+
+	
+
+
+
+
+<div id="__AdvancedSearchResultsPanel" style="text-align:center;">
+
+</div>
+
+<table id="__tblCombinedResults" cellspacing="20" cellpadding="0" width="100%" border="0">
+	<tr>
+		<td id="__Td1" valign="top">
+		
+		
+		
+		<div id="__ResultSummary" class="results_summary">
+			Results 1-25 of about 313,874 results found for 'Search' in <a title='1.37\0.02\0.00\0.20\0.00\0.00s'>1.59 seconds</a>
+		</div>
+		<table cellspacing="0" rules="all" border="0" id="__gResults" style="border-width:0px;border-collapse:collapse;">
+			<tr class="paginator">
+				<td><nobr>&nbsp;<span>1</span>&nbsp;<a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=1">2</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=2">3</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=3">4</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=4">5</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=5">6</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=6">7</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=7">8</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=8">9</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=9">10</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=10">...</a></nobr><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidA551926D67DA719098E20AF895C977F8179416BB.aspx?s=Search" class="results_header">class.Scheduler.php</a><div class="snippet"><pre>     // Parameters:
+     //
+     //     $group_id - id for the group that is being <b>search</b>ed for
+     //
+     // Returns:
+</pre></div>Language: PHP<br/>LOC: 670<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=B6YRAVWY4SEB5CWWBMMPCCFD9B" title="GPL'd Electronic Medical Record and Practice Management system for medical providers that runs in any web browser in multiple languages.">FreeMED Project</a> (<a href="/?s=Search&la=PHP&li=*&scope=B6YRAVWY4SEB5CWWBMMPCCFD9B">project search</a>) : <a href="/php/fidA551926D67DA719098E20AF895C977F8179416BB.aspx?s=Search">.../freemed/freemed/freemed/lib/class.Scheduler.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid3CD24B9C61DF2CC58C39E373BCCDFB4333FB9CD3.aspx?s=Search" class="results_header">index.php</a><div class="snippet"><pre>      &lt;p&gt;&lt;font size=&quot;2&quot;&gt;With HandyNotes, any time you need to jot something down
+      you can just click on an icon and create a new note. If you need to refer
+      to previous notes, you can easily browse them, or <b>search</b> for a keyword.&lt;/font&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;font size=&quot;2&quot;&gt;Starting with version 2.0, HandyNotes &lt;b&gt; users can now
+      synchronize their notes with the HandyNotes.net website&lt;/b&gt;, meaning that you
+</pre></div>Language: PHP<br/>LOC: 50<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=7LM65YDL5428Q5NNLK7H3D86PD" title="HandyNotes is a Java application designed to make it easy to keep a bunch of notes and random thoughts easily accessible, instead of having to keep, for example, a bunch of Notepad files scattered on your desktop (at least in Windows). It also syncs to th">HandyNotes</a> (<a href="/?s=Search&la=PHP&li=*&scope=7LM65YDL5428Q5NNLK7H3D86PD">project search</a>) : <a href="/php/fid3CD24B9C61DF2CC58C39E373BCCDFB4333FB9CD3.aspx?s=Search">.../h/handynotes/handynotes/server/index.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid3CD24B9C61DF2CC58C39E373BCCDFB4333FB9CD3.aspx?s=Search" class="results_header">index.php</a><div class="snippet"><pre>      &lt;p&gt;&lt;font size=&quot;2&quot;&gt;With HandyNotes, any time you need to jot something down
+      you can just click on an icon and create a new note. If you need to refer
+      to previous notes, you can easily browse them, or <b>search</b> for a keyword.&lt;/font&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;font size=&quot;2&quot;&gt;Starting with version 2.0, HandyNotes &lt;b&gt; users can now
+      synchronize their notes with the HandyNotes.net website&lt;/b&gt;, meaning that you
+</pre></div>Language: PHP<br/>LOC: 50<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=7LM65YDL5428Q5NNLK7H3D86PD" title="HandyNotes is a Java application designed to make it easy to keep a bunch of notes and random thoughts easily accessible, instead of having to keep, for example, a bunch of Notepad files scattered on your desktop (at least in Windows). It also syncs to th">HandyNotes</a> (<a href="/?s=Search&la=PHP&li=*&scope=7LM65YDL5428Q5NNLK7H3D86PD">project search</a>) : <a href="/php/fid3CD24B9C61DF2CC58C39E373BCCDFB4333FB9CD3.aspx?s=Search">.../h/handynotes/handynotes/server/index.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidE1ABF7B8A9A7AF5E60E9A6748002B36125E814D7.aspx?s=Search" class="results_header">functions.php</a><div class="snippet"><pre>     $con = pla_ldap_connect( $server_id );
+     if( ! $con ) return false;
+     $<b>search</b> = @ldap_list( $con, $dn, 'objectClass=*', array( 'dn' ), 1, $size_limit );
+     if( ! $<b>search</b> )
+          return array();
+</pre></div>Language: PHP<br/>LOC: 702<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=8LREYULPR7T2MHXH9ZHKNR4LAD" title="">eGroupWare: Enterprise Collaboration</a> (<a href="/?s=Search&la=PHP&li=*&scope=8LREYULPR7T2MHXH9ZHKNR4LAD">project search</a>) : <a href="/php/fidE1ABF7B8A9A7AF5E60E9A6748002B36125E814D7.aspx?s=Search">.../egroupware/phpldapadmin/functions.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidE1ABF7B8A9A7AF5E60E9A6748002B36125E814D7.aspx?s=Search" class="results_header">functions.php</a><div class="snippet"><pre>     $con = pla_ldap_connect( $server_id );
+     if( ! $con ) return false;
+     $<b>search</b> = @ldap_list( $con, $dn, 'objectClass=*', array( 'dn' ), 1, $size_limit );
+     if( ! $<b>search</b> )
+          return array();
+</pre></div>Language: PHP<br/>LOC: 702<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=8LREYULPR7T2MHXH9ZHKNR4LAD" title="">eGroupWare: Enterprise Collaboration</a> (<a href="/?s=Search&la=PHP&li=*&scope=8LREYULPR7T2MHXH9ZHKNR4LAD">project search</a>) : <a href="/php/fidE1ABF7B8A9A7AF5E60E9A6748002B36125E814D7.aspx?s=Search">.../egroupware/phpldapadmin/functions.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid9BF8A8F63BC20873229044ECD93128E4F3D17F15.aspx?s=Search" class="results_header">class.Handler_HL7v2.php</a><div class="snippet"><pre>               return stripslashes($r['id']);
+          } else {
+               die('_PIDToPatient - Need smarter algorithm ... several patients found in <b>search</b>.');
+          }
+     } // end method _PIDToPatient
+</pre></div>Language: PHP<br/>LOC: 60<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=B6YRAVWY4SEB5CWWBMMPCCFD9B" title="GPL'd Electronic Medical Record and Practice Management system for medical providers that runs in any web browser in multiple languages.">FreeMED Project</a> (<a href="/?s=Search&la=PHP&li=*&scope=B6YRAVWY4SEB5CWWBMMPCCFD9B">project search</a>) : <a href="/php/fid9BF8A8F63BC20873229044ECD93128E4F3D17F15.aspx?s=Search">.../freemed/freemed/freemed/lib/class.Handler_HL7v2.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid84C0B63FAC8E7570B85B0063C6398CD1C88083DA.aspx?s=Search" class="results_header">learnmore.php</a><div class="snippet"><pre>            installed and running, just click on the tray icon or press a
+            hotkey, and HandyNotes pops up. Then you can either browse through
+            your notes or <b>search</b>, or you can click and create a new note. No
+            need to create new text documents or keep messy post it notes.&amp;nbsp;&lt;/font&gt;
+            &lt;p&gt;&lt;b&gt;HandyNotes.net&lt;br&gt;
+</pre></div>Language: PHP<br/>LOC: 63<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=7LM65YDL5428Q5NNLK7H3D86PD" title="HandyNotes is a Java application designed to make it easy to keep a bunch of notes and random thoughts easily accessible, instead of having to keep, for example, a bunch of Notepad files scattered on your desktop (at least in Windows). It also syncs to th">HandyNotes</a> (<a href="/?s=Search&la=PHP&li=*&scope=7LM65YDL5428Q5NNLK7H3D86PD">project search</a>) : <a href="/php/fid84C0B63FAC8E7570B85B0063C6398CD1C88083DA.aspx?s=Search">.../h/handynotes/handynotes/server/learnmore.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid84C0B63FAC8E7570B85B0063C6398CD1C88083DA.aspx?s=Search" class="results_header">learnmore.php</a><div class="snippet"><pre>            installed and running, just click on the tray icon or press a
+            hotkey, and HandyNotes pops up. Then you can either browse through
+            your notes or <b>search</b>, or you can click and create a new note. No
+            need to create new text documents or keep messy post it notes.&amp;nbsp;&lt;/font&gt;
+            &lt;p&gt;&lt;b&gt;HandyNotes.net&lt;br&gt;
+</pre></div>Language: PHP<br/>LOC: 63<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=7LM65YDL5428Q5NNLK7H3D86PD" title="HandyNotes is a Java application designed to make it easy to keep a bunch of notes and random thoughts easily accessible, instead of having to keep, for example, a bunch of Notepad files scattered on your desktop (at least in Windows). It also syncs to th">HandyNotes</a> (<a href="/?s=Search&la=PHP&li=*&scope=7LM65YDL5428Q5NNLK7H3D86PD">project search</a>) : <a href="/php/fid84C0B63FAC8E7570B85B0063C6398CD1C88083DA.aspx?s=Search">.../h/handynotes/handynotes/server/learnmore.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidCAB1E8C1C4FD4713F3F22AAE9B7BA5692A26896E.aspx?s=Search" class="results_header">search.php</a><div class="snippet"><pre>######################################################################
+#
+# Synopsis: <b>Search</b> metadata elements of OLAC 1.0 database for a given string.
+#
+# ChangeLog:
+</pre></div>Language: PHP<br/>LOC: 1231<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=H6PGHB4FAQMM13X1QLSE6FQ9VD" title="OLAC is creating a worldwide virtual library of language resources by developing consensus on best current practice for the digital archiving of language resources, and developing a network of interoperating repositories and services.">Open Language Archives Community</a> (<a href="/?s=Search&la=PHP&li=*&scope=H6PGHB4FAQMM13X1QLSE6FQ9VD">project search</a>) : <a href="/php/fidCAB1E8C1C4FD4713F3F22AAE9B7BA5692A26896E.aspx?s=Search">.../olac/olac_suite/mu_tools/search/search.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidCAB1E8C1C4FD4713F3F22AAE9B7BA5692A26896E.aspx?s=Search" class="results_header">search.php</a><div class="snippet"><pre>######################################################################
+#
+# Synopsis: <b>Search</b> metadata elements of OLAC 1.0 database for a given string.
+#
+# ChangeLog:
+</pre></div>Language: PHP<br/>LOC: 1231<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=H6PGHB4FAQMM13X1QLSE6FQ9VD" title="OLAC is creating a worldwide virtual library of language resources by developing consensus on best current practice for the digital archiving of language resources, and developing a network of interoperating repositories and services.">Open Language Archives Community</a> (<a href="/?s=Search&la=PHP&li=*&scope=H6PGHB4FAQMM13X1QLSE6FQ9VD">project search</a>) : <a href="/php/fidCAB1E8C1C4FD4713F3F22AAE9B7BA5692A26896E.aspx?s=Search">.../olac/olac_suite/mu_tools/search/search.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidB9549363206F18AC28E5C8EEB357C72550CFAE5C.aspx?s=Search" class="results_header">html.form.class.php</a><div class="snippet"><pre>        $sql.= &quot; &quot;.MAIN_DB_PREFIX .&quot;societe as s&quot;;
+        if ($filter) $sql.= &quot; WHERE &quot;.$filter;
+        if ($selected &amp;&amp; $conf-&gt;use_ajax &amp;&amp; $conf-&gt;global-&gt;COMPANY_USE_<b>SEARCH</b>_TO_SELECT)
+        {
+             if ($filter)
+</pre></div>Language: PHP<br/>License: GPL<br/>(C) 2007      Franky Van Liedekerke ...<br/>LOC: 2499<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=ZRRC7NXK8RH996YVKKQP8HM51G" title="Systme web de gestion d'activit pour PME, travailleurs indpendants. incluant la gestion de la trsorerie, la gnration de facture et le suivi client.">Dolibarr</a> (<a href="/?s=Search&la=PHP&li=*&scope=ZRRC7NXK8RH996YVKKQP8HM51G">project search</a>) : <a href="/php/fidB9549363206F18AC28E5C8EEB357C72550CFAE5C.aspx?s=Search">.../dolibarr/dolibarr/dolibarr/htdocs/html.form.class.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidB9549363206F18AC28E5C8EEB357C72550CFAE5C.aspx?s=Search" class="results_header">html.form.class.php</a><div class="snippet"><pre>        $sql.= &quot; &quot;.MAIN_DB_PREFIX .&quot;societe as s&quot;;
+        if ($filter) $sql.= &quot; WHERE &quot;.$filter;
+        if ($selected &amp;&amp; $conf-&gt;use_ajax &amp;&amp; $conf-&gt;global-&gt;COMPANY_USE_<b>SEARCH</b>_TO_SELECT)
+        {
+             if ($filter)
+</pre></div>Language: PHP<br/>License: GPL<br/>(C) 2007      Franky Van Liedekerke ...<br/>LOC: 2499<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=ZRRC7NXK8RH996YVKKQP8HM51G" title="Systme web de gestion d'activit pour PME, travailleurs indpendants. incluant la gestion de la trsorerie, la gnration de facture et le suivi client.">Dolibarr</a> (<a href="/?s=Search&la=PHP&li=*&scope=ZRRC7NXK8RH996YVKKQP8HM51G">project search</a>) : <a href="/php/fidB9549363206F18AC28E5C8EEB357C72550CFAE5C.aspx?s=Search">.../dolibarr/dolibarr/dolibarr/htdocs/html.form.class.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid7AA010BDD9331F796C49E922C600FF28A93F6440.aspx?s=Search" class="results_header">functions.inc.php</a><div class="snippet"><pre>     print '&lt;td&gt;&lt;input name=&quot;username&quot; class=&quot;flat&quot; size=&quot;15&quot; maxlength=&quot;25&quot; value=&quot;&quot; tabindex=&quot;1&quot; /&gt;&lt;/td&gt;';
+     if ($conf-&gt;main_authentication) $title.=$langs-&gt;trans(&quot;AuthenticationMode&quot;).': '.$conf-&gt;main_authentication;
+     // Show logo (<b>search</b> in order: small company logo, large company logo, theme logo, common logo)
+     $width=0;
+     $urllogo=DOL_URL_ROOT.'/theme/login_logo.png';
+</pre></div>Language: PHP<br/>License: GPL<br/>(C) 2004      Christophe Combelles ...<br/>LOC: 2001<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=ZRRC7NXK8RH996YVKKQP8HM51G" title="Systme web de gestion d'activit pour PME, travailleurs indpendants. incluant la gestion de la trsorerie, la gnration de facture et le suivi client.">Dolibarr</a> (<a href="/?s=Search&la=PHP&li=*&scope=ZRRC7NXK8RH996YVKKQP8HM51G">project search</a>) : <a href="/php/fid7AA010BDD9331F796C49E922C600FF28A93F6440.aspx?s=Search">.../dolibarr/dolibarr/htdocs/lib/functions.inc.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid7AA010BDD9331F796C49E922C600FF28A93F6440.aspx?s=Search" class="results_header">functions.inc.php</a><div class="snippet"><pre>     print '&lt;td&gt;&lt;input name=&quot;username&quot; class=&quot;flat&quot; size=&quot;15&quot; maxlength=&quot;25&quot; value=&quot;&quot; tabindex=&quot;1&quot; /&gt;&lt;/td&gt;';
+     if ($conf-&gt;main_authentication) $title.=$langs-&gt;trans(&quot;AuthenticationMode&quot;).': '.$conf-&gt;main_authentication;
+     // Show logo (<b>search</b> in order: small company logo, large company logo, theme logo, common logo)
+     $width=0;
+     $urllogo=DOL_URL_ROOT.'/theme/login_logo.png';
+</pre></div>Language: PHP<br/>License: GPL<br/>(C) 2004      Christophe Combelles ...<br/>LOC: 2001<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=ZRRC7NXK8RH996YVKKQP8HM51G" title="Systme web de gestion d'activit pour PME, travailleurs indpendants. incluant la gestion de la trsorerie, la gnration de facture et le suivi client.">Dolibarr</a> (<a href="/?s=Search&la=PHP&li=*&scope=ZRRC7NXK8RH996YVKKQP8HM51G">project search</a>) : <a href="/php/fid7AA010BDD9331F796C49E922C600FF28A93F6440.aspx?s=Search">.../dolibarr/dolibarr/htdocs/lib/functions.inc.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidD5145ACED0D1C6970CACE1689633FE2ACE611F22.aspx?s=Search" class="results_header">class.bokb.inc.php</a><div class="snippet"><pre>          var $publish_filter;
+          /**
+          * <b>Search</b> string
+          *
+          * @access     public
+</pre></div>Language: PHP<br/>License: GPL<br/>LOC: 680<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=8LREYULPR7T2MHXH9ZHKNR4LAD" title="">eGroupWare: Enterprise Collaboration</a> (<a href="/?s=Search&la=PHP&li=*&scope=8LREYULPR7T2MHXH9ZHKNR4LAD">project search</a>) : <a href="/php/fidD5145ACED0D1C6970CACE1689633FE2ACE611F22.aspx?s=Search">.../egroupware/phpbrain/inc/class.bokb.inc.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidD5145ACED0D1C6970CACE1689633FE2ACE611F22.aspx?s=Search" class="results_header">class.bokb.inc.php</a><div class="snippet"><pre>          var $publish_filter;
+          /**
+          * <b>Search</b> string
+          *
+          * @access     public
+</pre></div>Language: PHP<br/>License: GPL<br/>LOC: 680<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=8LREYULPR7T2MHXH9ZHKNR4LAD" title="">eGroupWare: Enterprise Collaboration</a> (<a href="/?s=Search&la=PHP&li=*&scope=8LREYULPR7T2MHXH9ZHKNR4LAD">project search</a>) : <a href="/php/fidD5145ACED0D1C6970CACE1689633FE2ACE611F22.aspx?s=Search">.../egroupware/phpbrain/inc/class.bokb.inc.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid5CE198C751CB23E923B1B734D76097B19B032D64.aspx?s=Search" class="results_header">bibindex.php</a><div class="snippet"><pre> *          * display all the entries present in the bibliography, ordered by BibTeX key,
+ *          * display all entries belonging to a given group,
+ *          * basic <b>search</b> engine (one word) over authors, titles, and keywords.
+ *
+ *      BibORB may be used to create a new bibliography, but also support importation of a
+</pre></div>Language: PHP<br/>License: GPL<br/>(C) 2003-2007  Guillaume Gardey (ggardey@club-internet.fr)<br/>LOC: 688<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=56NHVCLP1L26KEEVL5SGX494VA" title="Web based tool to manage BibTeX bibliographies.">BibORB BibTeX On-line References Browser</a> (<a href="/?s=Search&la=PHP&li=*&scope=56NHVCLP1L26KEEVL5SGX494VA">project search</a>) : <a href="/php/fid5CE198C751CB23E923B1B734D76097B19B032D64.aspx?s=Search">.../b/biborb/biborb/biborb/bibindex.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid5CE198C751CB23E923B1B734D76097B19B032D64.aspx?s=Search" class="results_header">bibindex.php</a><div class="snippet"><pre> *          * display all the entries present in the bibliography, ordered by BibTeX key,
+ *          * display all entries belonging to a given group,
+ *          * basic <b>search</b> engine (one word) over authors, titles, and keywords.
+ *
+ *      BibORB may be used to create a new bibliography, but also support importation of a
+</pre></div>Language: PHP<br/>License: GPL<br/>(C) 2003-2007  Guillaume Gardey (ggardey@club-internet.fr)<br/>LOC: 688<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=56NHVCLP1L26KEEVL5SGX494VA" title="Web based tool to manage BibTeX bibliographies.">BibORB BibTeX On-line References Browser</a> (<a href="/?s=Search&la=PHP&li=*&scope=56NHVCLP1L26KEEVL5SGX494VA">project search</a>) : <a href="/php/fid5CE198C751CB23E923B1B734D76097B19B032D64.aspx?s=Search">.../b/biborb/biborb/biborb/bibindex.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidBE9CC61DBA4BAA129A349DD4BC7F44A480299CBE.aspx?s=Search" class="results_header">edit.php</a><div class="snippet"><pre> *                              they were changed by the last operation
+ */
+/** If an entry has more children than this, stop <b>search</b>ing and display this amount with a '+' */
+$max_children = 100;
+require 'common.php';
+</pre></div>Language: PHP<br/>LOC: 461<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=8LREYULPR7T2MHXH9ZHKNR4LAD" title="">eGroupWare: Enterprise Collaboration</a> (<a href="/?s=Search&la=PHP&li=*&scope=8LREYULPR7T2MHXH9ZHKNR4LAD">project search</a>) : <a href="/php/fidBE9CC61DBA4BAA129A349DD4BC7F44A480299CBE.aspx?s=Search">.../egroupware/phpldapadmin/edit.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fidBE9CC61DBA4BAA129A349DD4BC7F44A480299CBE.aspx?s=Search" class="results_header">edit.php</a><div class="snippet"><pre> *                              they were changed by the last operation
+ */
+/** If an entry has more children than this, stop <b>search</b>ing and display this amount with a '+' */
+$max_children = 100;
+require 'common.php';
+</pre></div>Language: PHP<br/>LOC: 461<br/>SourceForge : <a href="/info.aspx?c=ProjectInfo&pid=8LREYULPR7T2MHXH9ZHKNR4LAD" title="">eGroupWare: Enterprise Collaboration</a> (<a href="/?s=Search&la=PHP&li=*&scope=8LREYULPR7T2MHXH9ZHKNR4LAD">project search</a>) : <a href="/php/fidBE9CC61DBA4BAA129A349DD4BC7F44A480299CBE.aspx?s=Search">.../egroupware/phpldapadmin/edit.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid0E76429D3FBF5A64782979054A64532AAA69AA4D.aspx?s=Search" class="results_header">class.mail_msg_base.inc.php</a><div class="snippet"><pre>     As a speed up measure, and to reduce load on the IMAP server, there is an option to skip the calculating of the total ...  
+     if certain conditions are met, such as more then 100 messages in a folder, the user may request an override of this fo...  
+     @param mlist_set === <b>SEARCH</b> RESULT MESSAGE SET === DEPRECIATED - not yet fixed.
+     @param folder (string) most often a part of a msgball or fldball, the function begin_request will obtain the folder va...  
+     (1) args_array, the args passed directly to the begin_request function in the form of folder =&gt; Sent, if any,
+</pre></div>Language: PHP<br/>License: LGPL<br/>(C) 2001-2003 Angelo Tony Puglisi (Angles)...<br/>LOC: 3026<br/>Savannah GNU : <a href="/info.aspx?c=ProjectInfo&pid=WKEWY5XC6H8RPZ4L3WZ91M646C" title="phpGroupWare is a multi-user web-based groupware suite written in PHP. It also provides an API for developing additional applications.  For more information, please visit http://phpgroupware.org
+
+">phpGroupWare</a> (<a href="/?s=Search&la=PHP&li=*&scope=WKEWY5XC6H8RPZ4L3WZ91M646C">project search</a>) : <a href="/php/fid0E76429D3FBF5A64782979054A64532AAA69AA4D.aspx?s=Search">.../phpgroupware/phpgroupware/email/inc/class.mail_msg_base.inc.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid1FBBB47A03D178BA3D82E8E77A92A71189768890.aspx?s=Search" class="results_header">psg.php</a><div class="snippet"><pre>          'rss'          =&gt; 1,
+          'delArticle'     =&gt; 1,
+          '<b>search</b>'          =&gt; 1,
+          'user'          =&gt; 1,
+          'tag'          =&gt; 1,
+</pre></div>Language: PHP<br/>License: GPL<br/>(c) 2006 The Project Steve Guttenberg Team<br/>LOC: 3222<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=4QC76F8W9Q4WZB8G2UR7GUB94B" title="A journal/blogging application that integrates seamlessly into your Web site.">Project Steve Guttenberg</a> (<a href="/?s=Search&la=PHP&li=*&scope=4QC76F8W9Q4WZB8G2UR7GUB94B">project search</a>) : <a href="/php/fid1FBBB47A03D178BA3D82E8E77A92A71189768890.aspx?s=Search">.../p/psg/psg/psg/psg.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid1FBBB47A03D178BA3D82E8E77A92A71189768890.aspx?s=Search" class="results_header">psg.php</a><div class="snippet"><pre>          'rss'          =&gt; 1,
+          'delArticle'     =&gt; 1,
+          '<b>search</b>'          =&gt; 1,
+          'user'          =&gt; 1,
+          'tag'          =&gt; 1,
+</pre></div>Language: PHP<br/>License: GPL<br/>(c) 2006 The Project Steve Guttenberg Team<br/>LOC: 3222<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=4QC76F8W9Q4WZB8G2UR7GUB94B" title="A journal/blogging application that integrates seamlessly into your Web site.">Project Steve Guttenberg</a> (<a href="/?s=Search&la=PHP&li=*&scope=4QC76F8W9Q4WZB8G2UR7GUB94B">project search</a>) : <a href="/php/fid1FBBB47A03D178BA3D82E8E77A92A71189768890.aspx?s=Search">.../p/psg/psg/psg/psg.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid014361CE170BA4076DDFC9FEC04CD6FD50CCE53E.aspx?s=Search" class="results_header">get_var.php</a><div class="snippet"><pre>      @example $this-&gt;id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE',...  
+      @param $variable name
+      @param $method ordered array of methods to <b>search</b> for supplied variable
+      @param $default_value (optional)
+     */
+</pre></div>Language: PHP<br/>License: GPL<br/>Copyright 2002, 2003 Free Software Foundation, Inc.			*<br/>LOC: 126<br/>Savannah GNU : <a href="/info.aspx?c=ProjectInfo&pid=WKEWY5XC6H8RPZ4L3WZ91M646C" title="phpGroupWare is a multi-user web-based groupware suite written in PHP. It also provides an API for developing additional applications.  For more information, please visit http://phpgroupware.org
+
+">phpGroupWare</a> (<a href="/?s=Search&la=PHP&li=*&scope=WKEWY5XC6H8RPZ4L3WZ91M646C">project search</a>) : <a href="/php/fid014361CE170BA4076DDFC9FEC04CD6FD50CCE53E.aspx?s=Search">.../phpgroupware/phpgroupware/etemplate/inc/get_var.php</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/php/fid8572901457B8DE94BF8AA2A5FC491E1868D088EF.aspx?s=Search" class="results_header">search.php</a><div class="snippet"><pre>&lt;?php
+function act_<b>search</b>($params, $user=0) {
+  set_title(sprintf(_(&quot;<b>Search</b>ing dictionary for '%s'&quot;),$params));
+  if (!$params) {
+</pre></div>Language: PHP<br/>LOC: 104<br/>Savannah GNU : <a href="/info.aspx?c=ProjectInfo&pid=H8LNU6N23C23ZBZ3QGWXF9P2EF" title="Translation of GNOME desktop & development environment to Serbian language, and solving all the l10n and i18n issues as they arise.">Serbian GNOME Translation Project</a> (<a href="/?s=Search&la=PHP&li=*&scope=H8LNU6N23C23ZBZ3QGWXF9P2EF">project search</a>) : <a href="/php/fid8572901457B8DE94BF8AA2A5FC491E1868D088EF.aspx?s=Search">.../s/serbiangnome/serbiangnome/webtionary/search.php</a><br /><br /></td>
+			</tr><tr class="paginator">
+				<td><nobr>&nbsp;<span>1</span>&nbsp;<a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=1">2</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=2">3</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=3">4</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=4">5</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=5">6</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=6">7</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=7">8</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=8">9</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=9">10</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&p=10">...</a></nobr><br /><br /></td>
+			</tr>
+		</table>
+		
+		
+		
+		</td>
+		<td id="__RightCol" valign="top" width="160">
+<style type="text/css">
+<!--
+.pr_header 
+{
+	padding: 0px 0px 0px 0px;
+	background-color: whitesmoke;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.pr_footer {
+  border-top: solid 2px lightsteelblue;
+}
+
+.pr_results
+{
+	border-top: solid 2px lightsteelblue;
+	padding: 0x 4px 0px 4px;
+	background-color: whitesmoke;
+}
+
+.paginator {
+	
+}
+
+-->
+</style>
+<div class="pr_results"><table cellspacing="0" cellpadding="0" rules="all" border="0" id="__ctl05_DataGrid1" style="border-width:0px;border-style:None;width:100%;border-collapse:collapse;">
+			<tr class="pr_header">
+				<td><span class="pr_header">Project&nbsp;Matches</span><div class="paginator">
+					<nobr>&nbsp;<span>1</span>&nbsp;<a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&pp=1">2</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&pp=2">3</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&pp=3">4</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&pp=4">5</a><a href="/default.aspx?search.x=0&search.y=0&li=*&scope=&s=Search&la=PHP&pp=5">...</a></nobr>
+				</div><br /></td>
+			</tr><tr>
+				<td><a href="/info.aspx?c=ProjectInfo&amp;pid=K6XXD9TB7SY8LY3625971Z6ACB"><b>rife-search</b></a><br/><br/></td>
+			</tr><tr>
+				<td><a title="WWW::Search::Search" href="/info.aspx?c=ProjectInfo&amp;pid=5FU4W3BQ78Z2B93YZQQ44RMM1D"><b>WWW__Search__Search</b></a> - WWW::Search::Search<br/><br/></td>
+			</tr><tr>
+				<td><a title="WWW::Search::Search" href="/info.aspx?c=ProjectInfo&amp;pid=5FU4W3BQ78Z2B93YZQQ44RMM1D"><b>WWW__Search__Search</b></a> - WWW::Search::Search<br/><br/></td>
+			</tr><tr>
+				<td><a href="/info.aspx?c=ProjectInfo&amp;pid=PQR3GHLEPVN97P19842Y6EX7CH"><b>WWW::Search::Search</b></a><br/><br/></td>
+			</tr><tr>
+				<td><a title="Yahoo::Search, Yahoo::Search::Request, Yahoo::Search::Response, Yahoo::Search::Result, Yahoo::Search::XML" href="/info.aspx?c=ProjectInfo&amp;pid=NMW9HQLM8P9E2291L5CMC5WETG"><b>Yahoo__Search</b></a> - Yahoo::Search, Yahoo::Search::Request,...<br/><br/></td>
+			</tr><tr class="pr_footer">
+				<td><div class="pr_footer">
+					<span>Can't find a project?<br /><a href="http://corp.koders.com/corp/submitproject"><b>Add it to our index</b></a></span>
+				</div><br /></td>
+			</tr>
+		</table>
+</div>
+<div><br /></div>
+			
+<!-- Media Server Begin: 160x610 -->
+
+<!-- Media Server End: 160x610 -->
+<br/><br/><br/>
+<!-- Media Server Begin: 160x612 -->
+
+<!-- Media Server End: 160x612 -->
+<br/><br/><br/>
+<!-- Media Server Begin: 160x613 -->
+
+<!-- Media Server End: 160x613 -->
+
+<!-- Media Server Begin: 1x1 -->
+
+<!-- Media Server End: 1x1 -->
+
+			
+
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+<script type="text/javascript">
+init_sBG();
+window.onload = function(){ init_sBG(true); }
+</script>
+
+		    </div><!-- /search_wrapper -->
+		    
+		    <div id="tabs" class="more_wrapper">
+                
+            </div>
+		
+	        
+		
+	    
+	    	    
+	    <div class="bottom_spacer"></div>
+	    <!-- media footer starts -->
+	     <div style="CLEAR: both" align="center" id="FooterDiv">
+			    <TABLE cellSpacing=10 cellPadding=0 width="100%" align=center 
+  border=0><TBODY>
+  
+  <TR>
+    <TD colSpan=2 align=left vAlign=center bgColor=#ffffff>
+      <P align=center><A href="http://corp.koders.com/about/" class="k_footer">About Koders</A> | <A 
+      href="http://corp.koders.com/resources" class="k_footer">Resources</A> | <A
+   	  href="http://corp.koders.com/downloads/" class="k_footer">Downloads</A> | <A 
+      href="http://corp.koders.com/support/overview/" class="k_footer">Support</A> | <A 
+      href="http://www.blackducksoftware.com/" target="_blank" class="k_footer">Black Duck</A> | <A 
+      href="http://corp.koders.com/terms-of-service/" class="k_footer">Terms of Service </A> | <A 
+      href="http://corp.koders.com/DMCA/" class="k_footer">DMCA</A> | <A 
+      href="http://corp.koders.com/privacy-policy/" class="k_footer">Privacy Policy</A> | <A 
+      href="http://corp.koders.com/about#Contact" class="k_footer">Contact Us</A></P></TD></TR>
+  <TR>
+    <TD vAlign=center align=left bgColor=#ffffff colSpan=2>
+      <TABLE cellSpacing=0 cellPadding=0 width=100% border=0>
+        <TBODY>
+        <TR>
+          <TD colSpan=2>
+            <div align="center"><DIV id=k_copyright>
+            <p>&copy;2012 Koders is a trademark of Black Duck Software, Inc. Black Duck, Know Your Code, Ohloh, and the Black Duck logo are registered trademarks of Black Duck Software, Inc. in the United States and other jurisdictions.  All other trademarks are the property of their respective holders.</p>
+</DIV></DIV></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+
+
+
+			</div>
+			<!-- media footer ends -->
+    </div><!-- /content_wrapper -->
+
+    <div id="footer_wrapper">
+			
+     </div>
+     
+</form>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1450480-3");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+</body>
+</html>
