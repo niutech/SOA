@@ -18,9 +18,9 @@ class QueryBuilder
     {
         $query = new Query();
 
-        // @todo add creation of query
-        
-        return $query;
+        return $query
+                ->setLanguage($urlParamsMapper->getLanguageParamName(), $request->get($urlParamsMapper->getLanguageParamName()))
+                ->setQuery($urlParamsMapper->getQueryParamName(), $request->get($urlParamsMapper->getQueryParamName()));
     }
 
 }

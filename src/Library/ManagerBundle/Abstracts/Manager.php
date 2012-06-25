@@ -16,23 +16,30 @@ abstract class Manager
      * @var \Library\ManagerBundle\Libraries\Query
      */
     private $_query;
+    
+    /**
+     * @var \Library\CurlBundle\Classes\Curl\Anonymous
+     */
+    private $_curl;
 
+    /**
+     *
+     * @param Symfony\Component\HttpFoundation\Request $request
+     */
     public function __construct(Request $request)
     {
         $this->_query = QueryBuilder::fromRequest($request, $this->_getUrlParamsMapper());
+        $this->_curl = new AnonymousCurl();
     }
     
     /**
-     * @param Symfony\Component\HttpFoundation\Request $request
      * @return ResultSet 
      */
     public function getSearchResults()
     {
-        $curl = new AnonymousCurl();
-        
         return $this->_createResultSet(
             $this->_getParser()->parse(
-                $curl->getPage($this->_getBaseUrl() . $this->_query->encode())
+                $this->_curl->getPage($this->_getBaseUrl() . $this->_query->encode())
             )
         );
     }

@@ -3,6 +3,7 @@
 namespace Library\ManagerBundle\Tests;
 
 use \Library\ManagerBundle\Libraries\Result;
+use \Library\ManagerBundle\Libraries\Query;
 use \Library\ManagerBundle\Libraries\ResultSet;
 
 class ResultSetTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +36,7 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     public function settersWorkCorrectly()
     {
         $message = 'Everything went ok.';
-        $query = 'q=Awesome&type=Everything&repo=&langOverride=&start_value=1';
+        $query = $this->_createQuery();
         $language = 'JAVA';
         $results = array(
             new Result('a', 'b', 'c'),
@@ -79,7 +80,7 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     public function getEncoded()
     {
         $message = 'Everything went ok.';
-        $query = 'q=Awesome&type=Everything&repo=&langOverride=&start_value=1';
+        $query = $this->_createQuery();
         $language = 'JAVA';
         $results = array(
             new Result('a', 'b', 'c'),
@@ -93,8 +94,8 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
                   ->setResults($results);
         
         $encoded = $resultSet->getEncoded();
-        $expected = '{"success":true,"message":"Everything went ok.","query":"q=Awesome&type=Everything&repo=&langOverride=&start_value=1",'
-                  . '"language":"JAVA","results":[{"title":"a","url":"b","code":"c"},{"title":"1","url":"2","code":"3"}]}';
+        $expected = '{"success":true,"message":"Everything went ok.","query":"query=Something&lang=plgpsql","language":"JAVA",'
+                  . '"results":[{"title":"a","url":"b","code":"c"},{"title":"1","url":"2","code":"3"}]}';
         
         $this->assertEquals($expected, $encoded);
     }
@@ -112,5 +113,19 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         
         $resultSet = new ResultSet(true);
         $resultSet->setResults($results);
+    }
+    
+    /**
+     *
+     * @return \Library\ManagerBundle\Libraries\Query 
+     */
+    private function _createQuery()
+    {
+        $query = new Query();
+        
+        $query->setLanguage('lang', 'plgpsql')
+              ->setQuery('query', 'Something');
+        
+        return $query;
     }
 }

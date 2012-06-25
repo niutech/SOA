@@ -18,7 +18,7 @@ class ResultSet
     private $_message;
     
     /**
-     * @var string 
+     * @var \Library\ManagerBundle\Libraries\Query 
      */
     private $_query;
     
@@ -59,10 +59,10 @@ class ResultSet
     
     /**
      *
-     * @param string $query
+     * @param \Library\ManagerBundle\Libraries\Query $query
      * @return \Library\ManagerBundle\Libraries\ResultSet 
      */
-    public function setQuery($query)
+    public function setQuery(Query $query)
     {
         $this->_query = $query;
         
@@ -109,7 +109,7 @@ class ResultSet
         return json_encode(array(
             'success'   => $this->_success,
             'message'   => $this->_message,
-            'query'     => $this->_query,
+            'query'     => $this->_query->encode(),
             'language'  => $this->_language,
             'results'   => $this->_results
         ));
