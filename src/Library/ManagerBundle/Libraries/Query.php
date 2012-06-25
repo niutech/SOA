@@ -86,10 +86,10 @@ class Query
     {
         $params = array();
         
-        if (is_string($this->_queryParam) && is_string($this->_query))
+        if (is_string($this->_queryParam))
             $params[$this->_queryParam] = $this->_query;
         
-        if (is_string($this->_languageParam) && is_string($this->_language))
+        if (is_string($this->_languageParam))
             $params[$this->_languageParam] = $this->_language;
         
         if (0 === count($params))

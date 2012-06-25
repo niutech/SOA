@@ -1,0 +1,888 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="pageHead" profile="http://a9.com/-/spec/opensearch/1.1/"><title>
+	Koders Code Search: irc
+</title> <meta  name="ROBOTS"  content="NOARCHIVE"  /> 
+		<link href="/skins/koders/styles.css" type="text/css" rel="stylesheet" /><!--[if IE]><link href="/skins/koders/iestyles.css" type="text/css" rel="stylesheet" /><![endif]-->
+<link href="/Special/Stylesheets/koders.com.css" type="text/css" rel="stylesheet" /><link href="http://www.koders.com/search/KodersDescriptionOS1_1.xml"  title="Koders search" rel="search" type="application/opensearchdescription+xml" ><link href="http://www.koders.com/search/KodersDescriptionOS1_1Proj.xml"  title="Koders Projects search" rel="search" type="application/opensearchdescription+xml" ><meta name="description" content="The largest open source code search engine. Find, download and reuse open source code examples, projects and snippets in over 30 programming languages." />
+    <link href="/skins/koders/home-page.css" type="text/css" rel="stylesheet" />
+    <link href="/skins/enterprise/enterprise-home-page.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="/scripts/home-page-tabs.js"></script>
+</head>
+<body class="home results">
+<!-- media header starts -->
+<STYLE type=text/css media=all>
+
+@import url( http://media.blackducksoftware.com/koders/styles/koders_interface.css );
+
+</STYLE>
+
+
+
+
+
+
+
+<!-- Style for IE 6 -->
+
+<!--[if gte IE 6]>
+
+<style type="text/css">
+
+#nav_container {
+
+	MARGIN-TOP: -64px;
+
+	FONT-FAMILY: Arial;
+
+	POSITION: absolute;
+
+	right: 25px;
+
+	z-index:1;
+
+}
+
+UL.main_nav LI UL {
+
+	WIDTH: 150px; TOP: 20px; BACKGROUND-COLOR: #e6e6e6
+
+}
+
+UL.main_nav LI UL LI IMG {
+
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; MARGIN: -10px; WIDTH: 7px; PADDING-TOP: -10px
+
+}
+
+</style>
+
+<![endif]-->
+
+
+
+<SCRIPT type=text/javascript>
+
+function urldecode( str ) {
+        var histogram = {}, ret = str.toString(), unicodeStr='', hexEscStr='';
+    
+    var replacer = function(search, replace, str) {
+        var tmp_arr = [];
+        tmp_arr = str.split(search);
+        return tmp_arr.join(replace);
+    };
+    
+    // The histogram is identical to the one in urlencode.
+    histogram["'"]   = '%27';
+    histogram['(']   = '%28';
+    histogram[')']   = '%29';
+    histogram['*']   = '%2A';
+    histogram['~']   = '%7E';
+    histogram['!']   = '%21';
+    histogram['%20'] = '+';
+    histogram['\u00DC'] = '%DC';
+    histogram['\u00FC'] = '%FC';
+    histogram['\u00C4'] = '%D4';
+    histogram['\u00E4'] = '%E4';
+    histogram['\u00D6'] = '%D6';
+    histogram['\u00F6'] = '%F6';
+    histogram['\u00DF'] = '%DF'; 
+    histogram['\u20AC'] = '%80';
+    histogram['\u0081'] = '%81';
+    histogram['\u201A'] = '%82';
+    histogram['\u0192'] = '%83';
+    histogram['\u201E'] = '%84';
+    histogram['\u2026'] = '%85';
+    histogram['\u2020'] = '%86';
+    histogram['\u2021'] = '%87';
+    histogram['\u02C6'] = '%88';
+    histogram['\u2030'] = '%89';
+    histogram['\u0160'] = '%8A';
+    histogram['\u2039'] = '%8B';
+    histogram['\u0152'] = '%8C';
+    histogram['\u008D'] = '%8D';
+    histogram['\u017D'] = '%8E';
+    histogram['\u008F'] = '%8F';
+    histogram['\u0090'] = '%90';
+    histogram['\u2018'] = '%91';
+    histogram['\u2019'] = '%92';
+    histogram['\u201C'] = '%93';
+    histogram['\u201D'] = '%94';
+    histogram['\u2022'] = '%95';
+    histogram['\u2013'] = '%96';
+    histogram['\u2014'] = '%97';
+    histogram['\u02DC'] = '%98';
+    histogram['\u2122'] = '%99';
+    histogram['\u0161'] = '%9A';
+    histogram['\u203A'] = '%9B';
+    histogram['\u0153'] = '%9C';
+    histogram['\u009D'] = '%9D';
+    histogram['\u017E'] = '%9E';
+    histogram['\u0178'] = '%9F';
+ 
+    for (unicodeStr in histogram) {
+        hexEscStr = histogram[unicodeStr]; // Switch order when decoding
+        ret = replacer(hexEscStr, unicodeStr, ret); // Custom replace. No regexing
+    }
+    
+    // End with decodeURIComponent, which most resembles PHP's encoding functions
+    ret = decodeURIComponent(ret);
+ 
+    return ret;
+}
+
+function setsearchterm()
+{
+  name = "s";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  document.getElementById('searchbox').value = urldecode(results[1]);
+
+}
+
+function setsearchscope()
+{
+  name = "scope";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+
+//set the scope by default
+  document.getElementById('searchscope').value = results[1];
+
+//if we get told to clear scope, clear it.
+  action = "action";
+  action = action.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexA = "[\\?&]"+action+"=([^&#]*)";
+  var regexAct = new RegExp( regexA );
+  var actionresultstemp = regexAct.exec( window.location.href );
+  var actionresults = actionresultstemp[1];
+
+if (actionresults.match("ClearScope"))
+{
+  document.getElementById('searchscope').value = "";
+}
+}
+
+function setsearchlang()
+{
+  name = "la";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  document.getElementById('__ctl04_la').value = results[1];
+
+}
+
+function setsearchlic()
+{
+  name = "li";
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  document.getElementById('__ctl04_li').value = results[1];
+
+}
+
+
+var linkPrefix = "http://www.koders.com/ks/search/KodersMozillaPlugin_";
+
+function AddKodersSearch(name)
+{
+  if ((typeof window.sidebar == "object") && (typeof
+  window.sidebar.addSearchEngine == "function"))
+  {
+	var pluginUrl = linkPrefix + name + ".src"; 
+	var imageUrl  = linkPrefix + name + ".png"; 
+	//alert(pluginUrl + "\n" + imageUrl);
+	
+    window.sidebar.addSearchEngine(
+	  pluginUrl,
+      imageUrl,
+      name,
+      "Software Development");
+  }
+  else
+  {
+	alert("Your browser is not currently supported. Please contact support@koders.com if you would like further assistence.");
+  }
+}
+
+function TriggerAdd() {
+	var selectBox = document.getElementById('MozillaPluginSelect');
+	var selectedValue = selectBox.options[selectBox.selectedIndex].value + "";
+	if(selectedValue.length > 0) {
+		AddKodersSearch(selectedValue);
+	}
+}
+    
+
+function jsinit() {
+setsearchterm();
+setsearchlang();
+setsearchlic();
+setsearchscope();
+init_sBG(true);
+}
+
+window.onload = jsinit
+
+					</SCRIPT>
+
+<!-- following two given for nav --><!-- <script src='/themes/blackduck/globalScript.js' type=text/javascript></script> -->
+
+<SCRIPT 
+
+src="http://media.blackducksoftware.com/koders/scripts/twoLevelScript.js" 
+
+type=text/javascript></SCRIPT>
+
+<LINK title="rss 2.0" href="/rss.xml" type=application/rss+xml rel=alternate>
+
+<META content="MSHTML 6.00.2900.3527" name=GENERATOR></HEAD>
+
+<BODY>
+
+<TABLE id=container cellSpacing=0 cellPadding=0 width="100%" align=center 
+
+  border=0><TBODY>
+
+  <TR>
+
+    <TD vAlign=top width="100%" height=59>
+
+      <DIV class=header_row>
+
+      <TABLE class=header_row id=header_table cellSpacing=0 cellPadding=0 
+
+      width="100%" height=59 border=0>
+
+        <TBODY>
+
+        <TR>
+
+          <TD width=175 rowSpan=2><A 
+
+            id=duck_home_link href="/"><IMG 
+
+            height=59 width=175 alt="" 
+
+            src="http://media.blackducksoftware.com/koders/images/koders_logo_sm.gif" 
+
+            ></A> </TD>
+
+          <TD height=59>
+
+            <DIV id=search_field>
+
+
+
+            <form action="/default.aspx" method="get"> 
+
+			<INPUT value=Search
+
+            name=s id="searchbox" size="35" maxlength="100"> <INPUT type=image 
+
+            src="http://media.blackducksoftware.com/koders/images/search_carat_bl.gif" 
+
+            name=search><br>
+
+			<select name="la" id="__ctl04_la" class="language_select_box">
+	<option value="*">All Languages</option>
+	<option value="ActionScript">ActionScript</option>
+	<option value="Ada">Ada</option>
+	<option value="ASP">ASP</option>
+	<option value="ASP.NET">ASP.NET</option>
+	<option value="Assembler">Assembler</option>
+	<option value="C">C</option>
+	<option value="C#">C#</option>
+	<option value="Cpp">C++</option>
+	<option value="Cobol">Cobol</option>
+	<option value="ColdFusion">ColdFusion</option>
+	<option value="Delphi">Delphi</option>
+	<option value="Eiffel">Eiffel</option>
+	<option value="Erlang">Erlang</option>
+	<option value="Fortran">Fortran</option>
+	<option value="Java">Java</option>
+	<option value="JavaScript">JavaScript</option>
+	<option value="JSP">JSP</option>
+	<option value="Lisp">Lisp</option>
+	<option value="Lua">Lua</option>
+	<option value="Mathematica">Mathematica</option>
+	<option value="Matlab">Matlab</option>
+	<option value="ObjectiveC">ObjectiveC</option>
+	<option value="Perl">Perl</option>
+	<option value="PHP">PHP</option>
+	<option value="Prolog">Prolog</option>
+	<option value="Python">Python</option>
+	<option value="Ruby">Ruby</option>
+	<option value="Scheme">Scheme</option>
+	<option value="Smalltalk">Smalltalk</option>
+	<option value="SQL">SQL</option>
+	<option value="Tcl">Tcl</option>
+	<option value="VB">VB</option>
+	<option value="VB.NET">VB.NET</option>
+</select>
+        <select name="li" id="__ctl04_li" class="select_box">
+	<option value="*">All Licenses</option>
+	<option value="AFL">Academic Free License</option>
+	<option value="AL20">Apache License, Version 2.0</option>
+	<option value="ASL">Apache Software License</option>
+	<option value="APSL">Apple Public Source License</option>
+	<option value="BSD">BSD License</option>
+	<option value="CPL">Common Public License</option>
+	<option value="EPL10">Eclipse Public License v1.0</option>
+	<option value="GTPL">Globus Toolkit Public License</option>
+	<option value="GPL">GNU General Public License v1 v2 v3</option>
+	<option value="LGPL">GNU Lesser General Public License</option>
+	<option value="IBMPL">IBM Public License</option>
+	<option value="IOSL">Intel Open Source License</option>
+	<option value="MSCL">Microsoft Community License</option>
+	<option value="MSPL">Microsoft Permissive License</option>
+	<option value="MSRL">Microsoft Reference License</option>
+	<option value="MSVSSDK">Microsoft Visual Studio SDK License</option>
+	<option value="MITD">MIT Derived License</option>
+	<option value="MPL10">Mozilla Public License Version 1.0</option>
+	<option value="MPL11">Mozilla Public License Version 1.1</option>
+	<option value="NPL10">Netscape Public License, Version 1.0</option>
+	<option value="NPL11">Netscape Public License, Version 1.1</option>
+	<option value="OSL">Open Software License</option>
+	<option value="PHPL">PHP License</option>
+	<option value="PSFL">Python Software Foundation License</option>
+	<option value="SL">Sleepycat Software Product License</option>
+	<option value="SPL">Sun Public License</option>
+	<option value="W3C">W3C Software License</option>
+	<option value="ZLL">zlib/libpng License</option>
+	<option value="ZPL">Zope Public License</option>
+</select>
+
+	    <input type="hidden" name="scope" id="searchscope" value="">
+
+</FORM></DIV></TD></TR>
+
+        <TR><TD height=0>
+
+            <DIV id=nav_container>
+
+            <UL class=main_nav>
+
+              <LI class=top_level><A 
+              href="http://corp.koders.com/about/"><IMG class=rollovers 
+              id=learn_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/about_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="About Koders.com" 
+                href="http://corp.koders.com/about/">About</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Contact Us" 
+                href="http://corp.koders.com/about#Contact"> 
+                  Contact</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Site Map" 
+                href="http://corp.koders.com/sitemap"> 
+                  Site Map</A> </div>
+                </LI>
+              </ul></li>
+			  
+              <LI class=top_level><A 
+              href="http://corp.koders.com/resources"><IMG 
+              class=rollovers id=resources_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/resources_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="Overview" 
+                href="http://corp.koders.com/resources"> 
+                  Overview</A>                    </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Open Source License Info" 
+                href="http://corp.koders.com/resources/license-info">License Info</A> 
+                  </div>
+                </LI><LI>
+                  <div align="left"><A title="Top Searches" 
+                href="http://corp.koders.com/resources/top-searches">Top Searches</A> 
+                  </div>
+                </LI><LI>
+                  <div align="left"><A title="AD Search" 
+                href="http://corp.koders.com/resources/widgets">Add search to your site</A> 
+                  </div>
+                </LI><LI>
+                  <div align="left"><A title="feeback" 
+                href="http://corp.koders.com/resources/feedback">Feedback</A> 
+                  </div>
+                </LI>
+	</ul></li>
+              <LI class=top_level><A 
+              href="http://corp.koders.com/downloads"><IMG 
+              class=rollovers id=products_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/community_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="Overview" 
+                href="http://corp.koders.com/downloads"> 
+                  Overview</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Demo" 
+                href="http://corp.koders.com/downloads/demo">Demo 
+                  </A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Download Plugins" 
+                href="http://corp.koders.com/downloads/plugins">Plugins</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Download Plugins" 
+                href="http://corp.koders.com/downloads/plugins#IDE">IDE Plugins</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Download Plugins" 
+                href="http://corp.koders.com/downloads/plugins#browser">Browser Plugins</A> </div>
+                </LI>
+              </ul></li>
+              <LI class=top_level><A 
+              href="http://corp.koders.com/support/overview"><IMG class=rollovers 
+              id=news_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/support_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A title="Customer Support" 
+                href="http://corp.koders.com/support/overview">Overview</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Getting Started Guide" 
+                href="http://corp.koders.com/support/getting-started">Getting Started Guide</A> </div>
+                </LI><LI>
+                  <div align="left"><A title="Search Examples" 
+                href="http://corp.koders.com/support/getting-started#search">Search Examples</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A title="Contact Support" 
+                href="http://corp.koders.com/support/contact-support">Contact Support</A> </div>
+                </LI>
+                
+		</ul></li>
+              <LI class=top_level><A 
+              href="http://www.blackducksoftware.com/" target="_blank"><IMG 
+              class=rollovers id=blackduck_rollover alt="" 
+              src="http://media.blackducksoftware.com/koders/images/bds_button_top.gif"></A> 
+
+              <UL>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/" title="An overview of Black Duck Software" target="_blank">About Black Duck Software</A></div>
+                </LI>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/black-duck-suite" title="The Black Duck Suite" target="_blank">The Black Duck Suite</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/oss" 
+                title="OSS Page" target="_blank">Open Source Resource Center</A> </div>
+                </LI>
+                <LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/resources" title="Black Duck Knowledge Center" target="_blank">Black Duck Knowledge Center</A> </div>
+                </LI><LI>
+                  <div align="left"><A 
+                href="http://www.blackducksoftware.com/about/contact" title="Contact" target="_blank">Contact</A> </div>
+                </LI>
+              </UL></LI>
+              <LI class=top_level><A 
+              href="http://corp.koders.com/submitproject"><IMG 
+              src="http://media.blackducksoftware.com/koders/images/submit_button_top.gif" alt="" name="company_rollover" border="0" class=rollovers 
+              id=company_rollover></A></LI>
+</UL></DIV></TD>
+
+        </TR></TBODY></TABLE></DIV></TD></TD></TR>
+
+		
+
+  <TR>
+
+    <TD vAlign=top align=left height=7 bgcolor=#006699 colSpan=2></TD></TR>
+
+  
+
+  
+
+  </TBODY></TABLE>
+
+   <div align="center"><a href="http://www.blackducksoftware.com/code-sight/download" target="_blank"><img src="http://media.blackducksoftware.com/koders/header/ads/free_728x45.gif" alt="A" vspace="10" border="0"></a>
+
+   </div>
+
+
+<!-- media header ends -->
+
+
+<form id="f" name="f" method="get" action="default.aspx" style="margin:0;padding:0;height:100%;">		
+    <div class="content_wrapper">
+    	
+	    
+	    
+		
+        
+        
+		
+        
+	
+	    
+	        <div class="search_wrapper">
+		        
+
+
+
+	
+
+
+
+
+<div id="__AdvancedSearchResultsPanel" style="text-align:center;">
+
+</div>
+
+<table id="__tblCombinedResults" cellspacing="20" cellpadding="0" width="100%" border="0">
+	<tr>
+		<td id="__Td1" valign="top">
+		
+		
+		
+		<div id="__ResultSummary" class="results_summary">
+			Results 1-25 of about 4,209 results found for 'irc' in <a title='1.14\0.84\1.79\0.11\0.00\0.00s'>3.88 seconds</a>
+		</div>
+		<table cellspacing="0" rules="all" border="0" id="__gResults" style="border-width:0px;border-collapse:collapse;">
+			<tr class="paginator">
+				<td><nobr>&nbsp;<span>1</span>&nbsp;<a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=1">2</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=2">3</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=3">4</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=4">5</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=5">6</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=6">7</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=7">8</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=8">9</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=9">10</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=10">...</a></nobr><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidF638027BAD770364CA10AA0A6940E16723503BFE.aspx?s=irc" class="results_header">wiki.pl</a><div class="snippet"><pre>}
+sub Init {
+  InitD<b>irC</b>onfig();
+  $FS  = &quot;\x1e&quot;;      # The FS character is the RECORD SEPARATOR control char in ASCII
+  $Message = '';      # Warnings and non-fatal errors.
+</pre></div>Language: Perl<br/>License: GPL<br/>(C) 2001, 2002, 2003, 2004, 2005, 2006, 2007  Alex Schroeder ...<br/>LOC: 3595<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=1DYP4KTEBKXPSSPZXRZX5QH75F" title="Oddmuse runs as a Perl CGI script and generates a web site with editable pages.  Pages are stored in a format easy to edit for people without HTML know-how.
+">Oddmuse</a> (<a href="/?s=irc&la=Perl&li=*&scope=1DYP4KTEBKXPSSPZXRZX5QH75F">project search</a>) : <a href="/perl/fidF638027BAD770364CA10AA0A6940E16723503BFE.aspx?s=irc">.../o/oddmuse/oddmuse/oddmuse/wiki.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidF638027BAD770364CA10AA0A6940E16723503BFE.aspx?s=irc" class="results_header">wiki.pl</a><div class="snippet"><pre>}
+sub Init {
+  InitD<b>irC</b>onfig();
+  $FS  = &quot;\x1e&quot;;      # The FS character is the RECORD SEPARATOR control char in ASCII
+  $Message = '';      # Warnings and non-fatal errors.
+</pre></div>Language: Perl<br/>License: GPL<br/>(C) 2001, 2002, 2003, 2004, 2005, 2006, 2007  Alex Schroeder ...<br/>LOC: 3595<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=1DYP4KTEBKXPSSPZXRZX5QH75F" title="Oddmuse runs as a Perl CGI script and generates a web site with editable pages.  Pages are stored in a format easy to edit for people without HTML know-how.
+">Oddmuse</a> (<a href="/?s=irc&la=Perl&li=*&scope=1DYP4KTEBKXPSSPZXRZX5QH75F">project search</a>) : <a href="/perl/fidF638027BAD770364CA10AA0A6940E16723503BFE.aspx?s=irc">.../o/oddmuse/oddmuse/oddmuse/wiki.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid9584FFBF48006FDD55D341BB597A3EA66D95391F.aspx?s=irc" class="results_header">paster_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::OutputToPastebin);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'PasterBot',
+</pre></div>Language: Perl<br/>LOC: 32<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=KQURAGMSR17F1DLQS9WV2UYNWA" title="easily pastebin output from your bot ">POE::Component::IRC::Plugin::OutputToPastebin</a> (<a href="/?s=irc&la=Perl&li=*&scope=KQURAGMSR17F1DLQS9WV2UYNWA">project search</a>) : <a href="/perl/fid9584FFBF48006FDD55D341BB597A3EA66D95391F.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__OutputToPastebin/POE-Component-IRC-Plugin-OutputToPastebin-0.001/examples/paster_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid9584FFBF48006FDD55D341BB597A3EA66D95391F.aspx?s=irc" class="results_header">paster_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::OutputToPastebin);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'PasterBot',
+</pre></div>Language: Perl<br/>LOC: 32<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=KQURAGMSR17F1DLQS9WV2UYNWA" title="easily pastebin output from your bot ">POE::Component::IRC::Plugin::OutputToPastebin</a> (<a href="/?s=irc&la=Perl&li=*&scope=KQURAGMSR17F1DLQS9WV2UYNWA">project search</a>) : <a href="/perl/fid9584FFBF48006FDD55D341BB597A3EA66D95391F.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__OutputToPastebin/POE-Component-IRC-Plugin-OutputToPastebin-0.001/examples/paster_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidDFC2A33F5E1B34C166597A09E3B2AEF7771B1F56.aspx?s=irc" class="results_header">binds.pl</a><div class="snippet"><pre>#-*-cperl-*-
+bindm(name    =&gt; 'modules::<b>IRC</b>::jpb<b>IRC</b>',
+      method  =&gt; '<b>IRC</b>connect',
+      type    =&gt; 'intern',
+</pre></div>Language: Perl<br/>LOC: 129<br/>Spider_20090107_inc : <a href="/info.aspx?c=ProjectInfo&pid=RAWT6QAAUQPDKVSQPE79HQFPZE" title="Jabber Perl Bot (JPB) is a Jabber Bot which also have a IRC module (can sit on multiple servers with different nicks on different channels) and is (hopefully) easy to extend with perl modules.">Jabber Perl Bot</a> (<a href="/?s=irc&la=Perl&li=*&scope=RAWT6QAAUQPDKVSQPE79HQFPZE">project search</a>) : <a href="/perl/fidDFC2A33F5E1B34C166597A09E3B2AEF7771B1F56.aspx?s=irc">.../jpb/jpb-0.3.3/modules/IRC/binds.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid83092C7AE67A8A30C9F686F82DAA080D9227CF51.aspx?s=irc" class="results_header">css_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::CSS::PropertyInfo);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'CSSInfoBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=MQWB4K7SLGVAH4AH3VZFMU17XE" title="lookup CSS property information from IRC ">POE::Component::IRC::Plugin::CSS::PropertyInfo</a> (<a href="/?s=irc&la=Perl&li=*&scope=MQWB4K7SLGVAH4AH3VZFMU17XE">project search</a>) : <a href="/perl/fid83092C7AE67A8A30C9F686F82DAA080D9227CF51.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__CSS__PropertyInfo/POE-Component-IRC-Plugin-CSS-PropertyInfo-0.002/examples/css_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid08AD524ED1D18E21D14542697646B8F2E8B39A7E.aspx?s=irc" class="results_header">mini_bot.pl</a><div class="snippet"><pre>use lib qw(lib ../lib);
+use POE qw(
+    Component::<b>IRC</b>
+    Component::<b>IRC</b>::Plugin::OutputToPastebin
+    Component::<b>IRC</b>::Plugin::CSS::Minifier
+</pre></div>Language: Perl<br/>LOC: 35<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=MPGG5QP4N9BHBYZRMLVTTG414E" title="plugin to "minify" CSS code ">POE::Component::IRC::Plugin::CSS::Minifier</a> (<a href="/?s=irc&la=Perl&li=*&scope=MPGG5QP4N9BHBYZRMLVTTG414E">project search</a>) : <a href="/perl/fid08AD524ED1D18E21D14542697646B8F2E8B39A7E.aspx?s=irc">.../POE__Component__IRC__Plugin__CSS__Minifier/POE-Component-IRC-Plugin-CSS-Minifier-0.0101.tar.gz/POE-Component-IRC-Plugin-CSS-Minifier-0.0101/examples/mini_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid4BF0D58321BBCC35CDADAEB9704367BE1CF69FBB.aspx?s=irc" class="results_header">8ball_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib qw(lib ../lib);
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::Magic8Ball);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'Magic8BallBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=8RLF4BM5UNUHAH4A2GNX4YBTGF" title="Magic 8 Ball plugin for IRC ">POE::Component::IRC::Plugin::Magic8Ball</a> (<a href="/?s=irc&la=Perl&li=*&scope=8RLF4BM5UNUHAH4A2GNX4YBTGF">project search</a>) : <a href="/perl/fid4BF0D58321BBCC35CDADAEB9704367BE1CF69FBB.aspx?s=irc">.../POE__Component__IRC__Plugin__Magic8Ball/POE-Component-IRC-Plugin-Magic8Ball-0.0101.tar.gz/POE-Component-IRC-Plugin-Magic8Ball-0.0101/examples/8ball_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid83092C7AE67A8A30C9F686F82DAA080D9227CF51.aspx?s=irc" class="results_header">css_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::CSS::PropertyInfo);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'CSSInfoBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=MQWB4K7SLGVAH4AH3VZFMU17XE" title="lookup CSS property information from IRC ">POE::Component::IRC::Plugin::CSS::PropertyInfo</a> (<a href="/?s=irc&la=Perl&li=*&scope=MQWB4K7SLGVAH4AH3VZFMU17XE">project search</a>) : <a href="/perl/fid83092C7AE67A8A30C9F686F82DAA080D9227CF51.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__CSS__PropertyInfo/POE-Component-IRC-Plugin-CSS-PropertyInfo-0.002/examples/css_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidFDCDF21C5C0B1E2A731E38F0F5143D52EDBBBB62.aspx?s=irc" class="results_header">html_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::HTML::ElementInfo);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'HTMLInfoBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=GVDKYK529SEQ2K7V1RLC5RKBAD" title="lookup HTML element information from IRC ">POE::Component::IRC::Plugin::HTML::ElementInfo</a> (<a href="/?s=irc&la=Perl&li=*&scope=GVDKYK529SEQ2K7V1RLC5RKBAD">project search</a>) : <a href="/perl/fidFDCDF21C5C0B1E2A731E38F0F5143D52EDBBBB62.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__HTML__ElementInfo/POE-Component-IRC-Plugin-HTML-ElementInfo-0.001/examples/html_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidB9524C83D24ED2FD6DEB155D711D6D8224B86359.aspx?s=irc" class="results_header">link_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::CPAN::LinksToDocs);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'DocBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=57V2UM46X2ST3P69ZCTELANL5G" title="get links to http://search.cpan.org/ documentation from IRC ">POE::Component::IRC::Plugin::CPAN::LinksToDocs</a> (<a href="/?s=irc&la=Perl&li=*&scope=57V2UM46X2ST3P69ZCTELANL5G">project search</a>) : <a href="/perl/fidB9524C83D24ED2FD6DEB155D711D6D8224B86359.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__CPAN__LinksToDocs/POE-Component-IRC-Plugin-CPAN-LinksToDocs-0.001/examples/link_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidFDCDF21C5C0B1E2A731E38F0F5143D52EDBBBB62.aspx?s=irc" class="results_header">html_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::HTML::ElementInfo);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'HTMLInfoBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=GVDKYK529SEQ2K7V1RLC5RKBAD" title="lookup HTML element information from IRC ">POE::Component::IRC::Plugin::HTML::ElementInfo</a> (<a href="/?s=irc&la=Perl&li=*&scope=GVDKYK529SEQ2K7V1RLC5RKBAD">project search</a>) : <a href="/perl/fidFDCDF21C5C0B1E2A731E38F0F5143D52EDBBBB62.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__HTML__ElementInfo/POE-Component-IRC-Plugin-HTML-ElementInfo-0.001/examples/html_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidB9524C83D24ED2FD6DEB155D711D6D8224B86359.aspx?s=irc" class="results_header">link_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::CPAN::LinksToDocs);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'DocBot',
+</pre></div>Language: Perl<br/>LOC: 31<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=57V2UM46X2ST3P69ZCTELANL5G" title="get links to http://search.cpan.org/ documentation from IRC ">POE::Component::IRC::Plugin::CPAN::LinksToDocs</a> (<a href="/?s=irc&la=Perl&li=*&scope=57V2UM46X2ST3P69ZCTELANL5G">project search</a>) : <a href="/perl/fidB9524C83D24ED2FD6DEB155D711D6D8224B86359.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__CPAN__LinksToDocs/POE-Component-IRC-Plugin-CPAN-LinksToDocs-0.001/examples/link_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid95AF2BEEA5A93EF78EEE2016B830E5B9DC0B257B.aspx?s=irc" class="results_header">mail_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib qw(lib ../lib);
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::AntiSpamMailTo);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'MailtoBot',
+</pre></div>Language: Perl<br/>LOC: 27<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=HVDVP2ASNT5R9CMWQ1PYANC4MB" title="little IRC plugin to generate mailto: links that avoid dumb spam bots ">POE::Component::IRC::Plugin::AntiSpamMailTo</a> (<a href="/?s=irc&la=Perl&li=*&scope=HVDVP2ASNT5R9CMWQ1PYANC4MB">project search</a>) : <a href="/perl/fid95AF2BEEA5A93EF78EEE2016B830E5B9DC0B257B.aspx?s=irc">.../POE__Component__IRC__Plugin__AntiSpamMailTo/POE-Component-IRC-Plugin-AntiSpamMailTo-0.0101.tar.gz/POE-Component-IRC-Plugin-AntiSpamMailTo-0.0101/examples/mail_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid70898810A8BE22B4FABDB6B9F782FDE8CB8B4044.aspx?s=irc" class="results_header">irc_events.pl</a><div class="snippet"><pre>:- dynamic(<b>irc</b>_event/2).
+% <b>irc</b>_event(Event, ArgList) :- !, fail.
+<b>irc</b>_events_load :-
+</pre></div>Language: Perl<br/>LOC: 4<br/>Spider_20090107_inc : <a href="/info.aspx?c=ProjectInfo&pid=SFHLQLSRTXCWHG3PFH1ZBK3GWB" title="PrologBOT is an IRC Bot coded entirely in Prolog, taking advantage of all the &quot;wonders&quot; of Logic Programming. It supports plugis in Prolog, and will have a small A.I. engine to enable it to handle some situations by itself.">PrologBOT</a> (<a href="/?s=irc&la=Perl&li=*&scope=SFHLQLSRTXCWHG3PFH1ZBK3GWB">project search</a>) : <a href="/perl/fid70898810A8BE22B4FABDB6B9F782FDE8CB8B4044.aspx?s=irc">.../inc_004/prologbot/prologbot-0.0.1.tgz/prologBOT/irc_events.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidE51A9CDA8A124F5E99BAD42B18CC38A5C325A24B.aspx?s=irc" class="results_header">fortune_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib qw(lib ../lib);
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::Fortune);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'FortuneBot',
+</pre></div>Language: Perl<br/>LOC: 27<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=UH439YKL1X1GWN2UGPZNME7W7D" title="fortune cookies plugin for IRC ">POE::Component::IRC::Plugin::Fortune</a> (<a href="/?s=irc&la=Perl&li=*&scope=UH439YKL1X1GWN2UGPZNME7W7D">project search</a>) : <a href="/perl/fidE51A9CDA8A124F5E99BAD42B18CC38A5C325A24B.aspx?s=irc">.../POE__Component__IRC__Plugin__Fortune/POE-Component-IRC-Plugin-Fortune-0.0101.tar.gz/POE-Component-IRC-Plugin-Fortune-0.0101/examples/fortune_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidB2ECF1A26631DBD71AC34216EDB2AB5A8B3B289A.aspx?s=irc" class="results_header">bot.pl</a><div class="snippet"><pre>use warnings;
+use lib qw(lib ../lib);
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::CoinFlip);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'CoinBot',
+</pre></div>Language: Perl<br/>LOC: 27<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=73TQ61TG2AM36L41FWU2U2M46F" title="flip coins on IRC. ">POE::Component::IRC::Plugin::CoinFlip</a> (<a href="/?s=irc&la=Perl&li=*&scope=73TQ61TG2AM36L41FWU2U2M46F">project search</a>) : <a href="/perl/fidB2ECF1A26631DBD71AC34216EDB2AB5A8B3B289A.aspx?s=irc">.../POE__Component__IRC__Plugin__CoinFlip/POE-Component-IRC-Plugin-CoinFlip-0.0102.tar.gz/POE-Component-IRC-Plugin-CoinFlip-0.0102/examples/bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid95AF2BEEA5A93EF78EEE2016B830E5B9DC0B257B.aspx?s=irc" class="results_header">mail_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib qw(lib ../lib);
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::AntiSpamMailTo);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'MailtoBot',
+</pre></div>Language: Perl<br/>LOC: 27<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=HVDVP2ASNT5R9CMWQ1PYANC4MB" title="little IRC plugin to generate mailto: links that avoid dumb spam bots ">POE::Component::IRC::Plugin::AntiSpamMailTo</a> (<a href="/?s=irc&la=Perl&li=*&scope=HVDVP2ASNT5R9CMWQ1PYANC4MB">project search</a>) : <a href="/perl/fid95AF2BEEA5A93EF78EEE2016B830E5B9DC0B257B.aspx?s=irc">.../POE__Component__IRC__Plugin__AntiSpamMailTo/POE-Component-IRC-Plugin-AntiSpamMailTo-0.0101.tar.gz/POE-Component-IRC-Plugin-AntiSpamMailTo-0.0101/examples/mail_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid70898810A8BE22B4FABDB6B9F782FDE8CB8B4044.aspx?s=irc" class="results_header">irc_events.pl</a><div class="snippet"><pre>:- dynamic(<b>irc</b>_event/2).
+% <b>irc</b>_event(Event, ArgList) :- !, fail.
+<b>irc</b>_events_load :-
+</pre></div>Language: Perl<br/>LOC: 4<br/>Spider_20090107_inc : <a href="/info.aspx?c=ProjectInfo&pid=SFHLQLSRTXCWHG3PFH1ZBK3GWB" title="PrologBOT is an IRC Bot coded entirely in Prolog, taking advantage of all the &quot;wonders&quot; of Logic Programming. It supports plugis in Prolog, and will have a small A.I. engine to enable it to handle some situations by itself.">PrologBOT</a> (<a href="/?s=irc&la=Perl&li=*&scope=SFHLQLSRTXCWHG3PFH1ZBK3GWB">project search</a>) : <a href="/perl/fid70898810A8BE22B4FABDB6B9F782FDE8CB8B4044.aspx?s=irc">.../inc_004/prologbot/prologbot-0.0.1.tgz/prologBOT/irc_events.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidE51A9CDA8A124F5E99BAD42B18CC38A5C325A24B.aspx?s=irc" class="results_header">fortune_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib qw(lib ../lib);
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::Fortune);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'FortuneBot',
+</pre></div>Language: Perl<br/>LOC: 27<br/>Spider_330 : <a href="/info.aspx?c=ProjectInfo&pid=UH439YKL1X1GWN2UGPZNME7W7D" title="fortune cookies plugin for IRC ">POE::Component::IRC::Plugin::Fortune</a> (<a href="/?s=irc&la=Perl&li=*&scope=UH439YKL1X1GWN2UGPZNME7W7D">project search</a>) : <a href="/perl/fidE51A9CDA8A124F5E99BAD42B18CC38A5C325A24B.aspx?s=irc">.../POE__Component__IRC__Plugin__Fortune/POE-Component-IRC-Plugin-Fortune-0.0101.tar.gz/POE-Component-IRC-Plugin-Fortune-0.0101/examples/fortune_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid8974951F845BC07B8B1A39F96F95B2B2DA2F9C75.aspx?s=irc" class="results_header">ftp_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::FTP::EasyUpload);
+die &quot;Usage: perl ftp_bot.pl &lt;host&gt; &lt;login&gt; &lt;password&gt;\n&quot;
+    unless @ARGV == 3;
+</pre></div>Language: Perl<br/>LOC: 42<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=PGENN554YCSFWA9EYK5ZG4W5EC" title="provide files to IRC users via FTP ">POE::Component::IRC::Plugin::FTP::EasyUpload</a> (<a href="/?s=irc&la=Perl&li=*&scope=PGENN554YCSFWA9EYK5ZG4W5EC">project search</a>) : <a href="/perl/fid8974951F845BC07B8B1A39F96F95B2B2DA2F9C75.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__FTP__EasyUpload/POE-Component-IRC-Plugin-FTP-EasyUpload-0.001/examples/ftp_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fidC72A84D14D7472EAE4BFE5CBE670BDEA2D49DE0B.aspx?s=irc" class="results_header">bot.pl</a><div class="snippet"><pre>:- include('net.pl').
+:- include('<b>irc</b>.pl').
+:- include('prologbot.pl').
+</pre></div>Language: Perl<br/>LOC: 3<br/>Spider_20090107_inc : <a href="/info.aspx?c=ProjectInfo&pid=SFHLQLSRTXCWHG3PFH1ZBK3GWB" title="PrologBOT is an IRC Bot coded entirely in Prolog, taking advantage of all the &quot;wonders&quot; of Logic Programming. It supports plugis in Prolog, and will have a small A.I. engine to enable it to handle some situations by itself.">PrologBOT</a> (<a href="/?s=irc&la=Perl&li=*&scope=SFHLQLSRTXCWHG3PFH1ZBK3GWB">project search</a>) : <a href="/perl/fidC72A84D14D7472EAE4BFE5CBE670BDEA2D49DE0B.aspx?s=irc">.../inc_004/prologbot/prologbot-0.0.1.tgz/prologBOT/bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid4DDE877E94FD965EFEA782968C0E09CC2E88FB4E.aspx?s=irc" class="results_header">Irc.pm</a><div class="snippet"><pre>package Leone::<b>Irc</b>;
+our $VERSION = '0.01';
+1;
+</pre></div>Language: Perl<br/>LOC: 3<br/>Savannah NonGNU : <a href="/info.aspx?c=ProjectInfo&pid=BBGP5X5C6HE2SFHFL93RW4C2QE" title="">leone - console irc client</a> (<a href="/?s=irc&la=Perl&li=*&scope=BBGP5X5C6HE2SFHFL93RW4C2QE">project search</a>) : <a href="/perl/fid4DDE877E94FD965EFEA782968C0E09CC2E88FB4E.aspx?s=irc">.../leone/leone/perl/Leone/Irc.pm</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid639EA8A75DB5ECC4122D0B3AAADF5E25269A17B1.aspx?s=irc" class="results_header">fail_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::SigFail);
+my $<b>irc</b> = POE::Component::<b>IRC</b>-&gt;spawn(
+    nick        =&gt; 'FailBot',
+</pre></div>Language: Perl<br/>LOC: 45<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=4FNY4NV5QC3GU3WFVT8QS2KV8H" title="make witty error/no result messages ">POE::Component::IRC::Plugin::SigFail</a> (<a href="/?s=irc&la=Perl&li=*&scope=4FNY4NV5QC3GU3WFVT8QS2KV8H">project search</a>) : <a href="/perl/fid639EA8A75DB5ECC4122D0B3AAADF5E25269A17B1.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__SigFail/POE-Component-IRC-Plugin-SigFail-0.001/examples/fail_bot.pl</a><br /><br /></td>
+			</tr><tr>
+				<td><a href="/perl/fid8974951F845BC07B8B1A39F96F95B2B2DA2F9C75.aspx?s=irc" class="results_header">ftp_bot.pl</a><div class="snippet"><pre>use warnings;
+use lib '../lib';
+use POE qw(Component::<b>IRC</b>  Component::<b>IRC</b>::Plugin::FTP::EasyUpload);
+die &quot;Usage: perl ftp_bot.pl &lt;host&gt; &lt;login&gt; &lt;password&gt;\n&quot;
+    unless @ARGV == 3;
+</pre></div>Language: Perl<br/>LOC: 42<br/>Spider_cpan0001 : <a href="/info.aspx?c=ProjectInfo&pid=PGENN554YCSFWA9EYK5ZG4W5EC" title="provide files to IRC users via FTP ">POE::Component::IRC::Plugin::FTP::EasyUpload</a> (<a href="/?s=irc&la=Perl&li=*&scope=PGENN554YCSFWA9EYK5ZG4W5EC">project search</a>) : <a href="/perl/fid8974951F845BC07B8B1A39F96F95B2B2DA2F9C75.aspx?s=irc">.../cpan0001/POE__Component__IRC__Plugin__FTP__EasyUpload/POE-Component-IRC-Plugin-FTP-EasyUpload-0.001/examples/ftp_bot.pl</a><br /><br /></td>
+			</tr><tr class="paginator">
+				<td><nobr>&nbsp;<span>1</span>&nbsp;<a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=1">2</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=2">3</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=3">4</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=4">5</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=5">6</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=6">7</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=7">8</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=8">9</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=9">10</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&p=10">...</a></nobr><br /><br /></td>
+			</tr>
+		</table>
+		
+		
+		
+		</td>
+		<td id="__RightCol" valign="top" width="160">
+<style type="text/css">
+<!--
+.pr_header 
+{
+	padding: 0px 0px 0px 0px;
+	background-color: whitesmoke;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.pr_footer {
+  border-top: solid 2px lightsteelblue;
+}
+
+.pr_results
+{
+	border-top: solid 2px lightsteelblue;
+	padding: 0x 4px 0px 4px;
+	background-color: whitesmoke;
+}
+
+.paginator {
+	
+}
+
+-->
+</style>
+<div class="pr_results"><table cellspacing="0" cellpadding="0" rules="all" border="0" id="__ctl05_DataGrid1" style="border-width:0px;border-style:None;width:100%;border-collapse:collapse;">
+			<tr class="pr_header">
+				<td><span class="pr_header">Project&nbsp;Matches</span><div class="paginator">
+					<nobr>&nbsp;<span>1</span>&nbsp;<a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&pp=1">2</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&pp=2">3</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&pp=3">4</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&pp=4">5</a><a href="/default.aspx?s=irc&search.x=0&search.y=0&la=Perl&li=*&scope=&pp=5">...</a></nobr>
+				</div><br /></td>
+			</tr><tr>
+				<td><a title="???? IRC ??????? ? ?????????? ????????" href="/info.aspx?c=ProjectInfo&amp;pid=CF2VKM5FZP8A4DMBS5YNELLULF"><b>irc-core - irc core</b></a> - ???? IRC ??????? ? ?????????? ????????<br/><br/></td>
+			</tr><tr>
+				<td><a title="???? IRC ??????? ? ?????????? ????????" href="/info.aspx?c=ProjectInfo&amp;pid=CF2VKM5FZP8A4DMBS5YNELLULF"><b>irc-core - irc core</b></a> - ???? IRC ??????? ? ?????????? ????????<br/><br/></td>
+			</tr><tr>
+				<td><a href="/info.aspx?c=ProjectInfo&amp;pid=GE2MPU4QVD12F5GVFK7XM8GD4C"><b>Nova IRC</b></a><br/><br/></td>
+			</tr><tr>
+				<td><a title="IRC::Crypt" href="/info.aspx?c=ProjectInfo&amp;pid=7VQHWRACYM4L5CM1YNRQ4N72NB"><b>IRC__Crypt</b></a> - IRC::Crypt<br/><br/></td>
+			</tr><tr>
+				<td><a href="/info.aspx?c=ProjectInfo&amp;pid=ZT4TC4VND2DQ7RRLG35DGSHA3H"><b>Nebula IRC</b></a><br/><br/></td>
+			</tr><tr class="pr_footer">
+				<td><div class="pr_footer">
+					<span>Can't find a project?<br /><a href="http://corp.koders.com/corp/submitproject"><b>Add it to our index</b></a></span>
+				</div><br /></td>
+			</tr>
+		</table>
+</div>
+<div><br /></div>
+			
+<!-- Media Server Begin: 160x610 -->
+
+<!-- Media Server End: 160x610 -->
+<br/><br/><br/>
+<!-- Media Server Begin: 160x612 -->
+
+<!-- Media Server End: 160x612 -->
+<br/><br/><br/>
+<!-- Media Server Begin: 160x613 -->
+
+<!-- Media Server End: 160x613 -->
+
+<!-- Media Server Begin: 1x1 -->
+
+<!-- Media Server End: 1x1 -->
+
+			
+
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+<script type="text/javascript">
+init_sBG();
+window.onload = function(){ init_sBG(true); }
+</script>
+
+		    </div><!-- /search_wrapper -->
+		    
+		    <div id="tabs" class="more_wrapper">
+                
+            </div>
+		
+	        
+		
+	    
+	    	    
+	    <div class="bottom_spacer"></div>
+	    <!-- media footer starts -->
+	     <div style="CLEAR: both" align="center" id="FooterDiv">
+			    <TABLE cellSpacing=10 cellPadding=0 width="100%" align=center 
+  border=0><TBODY>
+  
+  <TR>
+    <TD colSpan=2 align=left vAlign=center bgColor=#ffffff>
+      <P align=center><A href="http://corp.koders.com/about/" class="k_footer">About Koders</A> | <A 
+      href="http://corp.koders.com/resources" class="k_footer">Resources</A> | <A
+   	  href="http://corp.koders.com/downloads/" class="k_footer">Downloads</A> | <A 
+      href="http://corp.koders.com/support/overview/" class="k_footer">Support</A> | <A 
+      href="http://www.blackducksoftware.com/" target="_blank" class="k_footer">Black Duck</A> | <A 
+      href="http://corp.koders.com/terms-of-service/" class="k_footer">Terms of Service </A> | <A 
+      href="http://corp.koders.com/DMCA/" class="k_footer">DMCA</A> | <A 
+      href="http://corp.koders.com/privacy-policy/" class="k_footer">Privacy Policy</A> | <A 
+      href="http://corp.koders.com/about#Contact" class="k_footer">Contact Us</A></P></TD></TR>
+  <TR>
+    <TD vAlign=center align=left bgColor=#ffffff colSpan=2>
+      <TABLE cellSpacing=0 cellPadding=0 width=100% border=0>
+        <TBODY>
+        <TR>
+          <TD colSpan=2>
+            <div align="center"><DIV id=k_copyright>
+            <p>&copy;2012 Koders is a trademark of Black Duck Software, Inc. Black Duck, Know Your Code, Ohloh, and the Black Duck logo are registered trademarks of Black Duck Software, Inc. in the United States and other jurisdictions.  All other trademarks are the property of their respective holders.</p>
+</DIV></DIV></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+
+
+
+			</div>
+			<!-- media footer ends -->
+    </div><!-- /content_wrapper -->
+
+    <div id="footer_wrapper">
+			
+     </div>
+     
+</form>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1450480-3");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+</body>
+</html>

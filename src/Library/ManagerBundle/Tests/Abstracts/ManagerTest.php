@@ -18,7 +18,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->initialize(array(
-            'query_string' => 'query=symfony&lang=php'
+            'query_string' => 'query=mock-query-123456&lang=php'
         ));
 
         $this->_manager = new ManagerAbstractMock($request);
@@ -31,7 +31,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     {
         $query = new Query();
         $query->setLanguage('language', 'php')
-                ->setQuery('q', 'symfony');
+                ->setQuery('q', 'mock-query-123456');
 
         $this->assertEquals($query, $this->_manager->getQuery());
     }
@@ -50,10 +50,40 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         
         $query = new Query();
         $query->setLanguage('language', 'php')
-                ->setQuery('q', 'symfony');
+                ->setQuery('q', 'mock-query-123456');
         
         $this->assertEquals($query, $resultSet->getQuery());
         $this->assertEquals('php', $resultSet->getLanguage());
+    }
+    
+    /**
+     * @test 
+     */
+    public function cacheWorksCorrectly()
+    {
+        $sha1 = sha1(mktime());
+        
+        $hash = md5('https://github.com/search?repo=&langOverride=&start_value=1&type=Code&q=' . $sha1 . '&language=php');
+        $cacheFile = __DIR__ . '/../../../../../app/cache/searchcache/' . $hash;
+        
+        if (file_exists($cacheFile))
+            unlink ($cacheFile);
+        
+        $request = new Request();
+        $request->initialize(array(
+            'query_string' => 'query=' . $sha1 . '&lang=php'
+        ));
+        
+        $manager = new ManagerAbstractMock($request);
+        
+        $manager->getSearchResults();
+        $cacheFileTime = filectime($cacheFile); 
+        
+        sleep(1);
+        
+        $manager->getSearchResults();
+        
+        $this->assertEquals($cacheFileTime, filectime($cacheFile), 'File overwritten, problem with cache.');
     }
 
 }

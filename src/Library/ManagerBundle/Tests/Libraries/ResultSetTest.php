@@ -86,7 +86,8 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     {
         $results = array(
             new Result('a', 'b', 'c', 'd'),
-            new \stdClass()
+            new \stdClass(),
+            new \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException()
         );
         
         $resultSet = new ResultSet(true);

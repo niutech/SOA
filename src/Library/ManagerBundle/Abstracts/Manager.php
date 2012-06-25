@@ -21,6 +21,11 @@ abstract class Manager
      * @var \Library\CurlBundle\Classes\Curl\Anonymous
      */
     private $_curl;
+    
+    /**
+     * @var array
+     */
+    private $_config;
 
     /**
      *
@@ -30,22 +35,33 @@ abstract class Manager
     {
         $this->_query = QueryBuilder::fromRequest($request, $this->_getUrlParamsMapper());
         $this->_curl = new AnonymousCurl();
+        
+        $reader = new \Symfony\Component\Yaml\Yaml();
+        $this->_config = $reader->parse(__DIR__ . '/../Resources/config/cache.yml');
     }
     
     /**
+     * 
      * @return \Library\ManagerBundle\Libraries\ResultSet 
      */
     public function getSearchResults()
     {
-        $results = $this->_getParser()->parse(
-            $this->_curl->getPage($this->_getBaseUrl() . $this->_query->encode())
-        );
+        $url = $this->_getBaseUrl() . $this->_query->encode();
+        $cacheFile = __DIR__ . '/../../../../app/cache/' . $this->_config['search_cache']['directory'] . '/' . md5($url);
+        
+        if ($this->_isCached($cacheFile))
+            $results = $this->_getFromCache($cacheFile);
+        else
+        {
+            $results = $this->_getParser()->parse($this->_curl->getPage($url));
+            
+            $this->_cache($results, $cacheFile);
+        }
         
         $resultSet = new ResultSet(count($results) > 0);
         
-        return $resultSet
-                ->setQuery($this->_query)
-                ->setResults($results);
+        return $resultSet->setQuery($this->_query)
+                         ->setResults($results);
     }
     
     /**
@@ -55,6 +71,41 @@ abstract class Manager
     public function getQuery()
     {
         return $this->_query;
+    }
+    
+    /**
+     *
+     * @param string $cacheFile
+     * @return bool
+     */
+    private function _isCached($cacheFile)
+    {
+        return file_exists($cacheFile) && filectime($cacheFile) > time() - $this->_config['search_cache']['expiration'];
+    }
+    
+    /**
+     *
+     * @param string $cacheFile
+     * @return array 
+     */
+    private function _getFromCache($cacheFile)
+    {
+        return json_decode(file_get_contents($cacheFile));
+    }
+    
+    /**
+     *
+     * @param array $results
+     * @param string $cacheFile 
+     */
+    private function _cache(array $results, $cacheFile)
+    {
+        $dir = dirname($cacheFile);
+        
+        if (!file_exists($dir))
+            mkdir($dir, '0777', true);
+        
+        file_put_contents($cacheFile, json_encode($results));
     }
     
     /**
