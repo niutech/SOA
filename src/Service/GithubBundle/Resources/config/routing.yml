@@ -1,0 +1,3 @@
+ServiceGithubBundle_homepage:
+    pattern:  /search/github/{queryString}
+    defaults: { _controller: ServiceGithubBundle:Search:index }

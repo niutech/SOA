@@ -1,0 +1,7 @@
+parameters:
+#    library_parser.example.class: Library\ParserBundle\Example
+
+services:
+#    library_parser.example:
+#        class: %library_parser.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

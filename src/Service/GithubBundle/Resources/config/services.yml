@@ -1,0 +1,7 @@
+parameters:
+#    service_github.example.class: Service\GithubBundle\Example
+
+services:
+#    service_github.example:
+#        class: %service_github.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,8 +1,8 @@
 <?php
 
-namespace Library\CurlBundle;
+namespace Library\ManagerBundle;
 
 class Exception extends \Exception
 {
-
+    
 }
