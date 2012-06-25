@@ -37,16 +37,14 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Everything went ok.';
         $query = $this->_createQuery();
-        $language = 'JAVA';
         $results = array(
-            new Result('a', 'b', 'c'),
-            new Result('1', '2', '3')
+            new Result('a', 'b', 'c', 'd'),
+            new Result('1', '2', '3', '4')
         );
         
         $resultSet = new ResultSet(true);
         $resultSet->setMessage($message)
                   ->setQuery($query)
-                  ->setLanguage($language)
                   ->setResults($results);
         
         $refClass = new \ReflectionClass($resultSet);
@@ -70,7 +68,7 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($successProperty->getValue($resultSet));
         $this->assertEquals($message, $messageProperty->getValue($resultSet));
         $this->assertEquals($query, $queryProperty->getValue($resultSet));
-        $this->assertEquals($language, $languageProperty->getValue($resultSet));
+        $this->assertEquals('plgpsql', $languageProperty->getValue($resultSet));
         $this->assertEquals($results, $resultsProperty->getValue($resultSet));
     }
     
@@ -81,21 +79,19 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Everything went ok.';
         $query = $this->_createQuery();
-        $language = 'JAVA';
         $results = array(
-            new Result('a', 'b', 'c'),
-            new Result('1', '2', '3')
+            new Result('a', 'b', 'c', 'd'),
+            new Result('1', '2', '3', '4')
         );
         
         $resultSet = new ResultSet(true);
         $resultSet->setMessage($message)
                   ->setQuery($query)
-                  ->setLanguage($language)
                   ->setResults($results);
         
         $encoded = $resultSet->getEncoded();
-        $expected = '{"success":true,"message":"Everything went ok.","query":"query=Something&lang=plgpsql","language":"JAVA",'
-                  . '"results":[{"title":"a","url":"b","code":"c"},{"title":"1","url":"2","code":"3"}]}';
+        $expected = '{"success":true,"message":"Everything went ok.","query":"query=Something&lang=plgpsql","language":"plgpsql",'
+                  . '"results":[{"title":"a","url":"b","code":"c","language":"d"},{"title":"1","url":"2","code":"3","language":"4"}]}';
         
         $this->assertEquals($expected, $encoded);
     }
@@ -107,7 +103,7 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
     public function setResultsWithInvalidResults()
     {
         $results = array(
-            new Result('a', 'b', 'c'),
+            new Result('a', 'b', 'c', 'd'),
             new \stdClass()
         );
         

@@ -60,6 +60,22 @@ class Query
         
         return $this;
     }
+    
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->_language;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getQuery()
+    {
+        return $this->_query;
+    }
 
     /**
      *

@@ -65,18 +65,7 @@ class ResultSet
     public function setQuery(Query $query)
     {
         $this->_query = $query;
-        
-        return $this;
-    }
-    
-    /**
-     *
-     * @param string $language
-     * @return \Library\ManagerBundle\Libraries\ResultSet 
-     */
-    public function setLanguage($language)
-    {
-        $this->_language = $language;
+        $this->_language = $query->getLanguage();
         
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace Library\ManagerBundle\Tests;
 
+use \Library\ManagerBundle\Libraries\Query;
 use \Library\ManagerBundle\Libraries\ResultSet;
 use \Library\ManagerBundle\Libraries\ResultSetFactory;
 
@@ -13,8 +14,12 @@ class ResultSetTestFactory extends \PHPUnit_Framework_TestCase
      */
     public function createUnsuccessful()
     {
-        $encoded = ResultSetFactory::createUnsuccessful('Failure', 'q=Awesome&type=Everything')->getEncoded();
-        $expected = '{"success":false,"message":"Failure","query":"q=Awesome&type=Everything","language":null,"results":null}';
+        $query = new Query();
+        $query->setLanguage('l', 'php')
+              ->setQuery('q', 'symfony');
+        
+        $encoded = ResultSetFactory::createUnsuccessful('Failure', $query)->getEncoded();
+        $expected = '{"success":false,"message":"Failure","query":"q=symfony&l=php","language":"php","results":null}';
         
         $this->assertEquals($expected, $encoded);
     }

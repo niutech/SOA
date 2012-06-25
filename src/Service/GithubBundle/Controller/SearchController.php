@@ -21,7 +21,7 @@ class SearchController extends Controller
         }
         catch (\Exception $ex)
         {
-            $result = ResultSetFactory::createUnsuccessful($ex->getMessage(), $query);
+            $result = ResultSetFactory::createUnsuccessful($ex->getMessage(), $manager->getQuery());
         }
         
         $response = new Response($result->getEncoded());

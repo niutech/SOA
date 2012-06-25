@@ -2,16 +2,18 @@
 
 namespace Library\ManagerBundle\Libraries;
 
+use \Library\ManagerBundle\Libraries\Query;
+
 class ResultSetFactory
 {
     
     /**
      *
      * @param string $message
-     * @param string $query
+     * @param \Library\ManagerBundle\Libraries\Query $query
      * @return \Library\ManagerBundle\Libraries\ResultSet 
      */
-    public static function createUnsuccessful($message, $query)
+    public static function createUnsuccessful($message, Query $query)
     {
         $resultSet = new ResultSet(false);
 

@@ -37,6 +37,7 @@ class Curl
         curl_setopt($this->_curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->_curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($this->_curl, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($this->_curl, CURLOPT_SSL_VERIFYPEER, false);
     }
 
     /**

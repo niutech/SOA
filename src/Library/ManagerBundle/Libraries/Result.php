@@ -18,12 +18,18 @@ class Result
      * @var string 
      */
     public $code;
+    
+    /**
+     * @var string 
+     */
+    public $language;
 
-    public function __construct($title, $url, $code)
+    public function __construct($title, $url, $code, $lang)
     {
-        $this->title = $title;
-        $this->url = $url;
-        $this->code = $code;
+        $this->title        = $title;
+        $this->url          = $url;
+        $this->code         = $code;
+        $this->language     = $lang;
     }
     
 }

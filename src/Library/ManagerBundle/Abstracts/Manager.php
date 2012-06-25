@@ -44,6 +44,15 @@ abstract class Manager
         );
     }
     
+    /**
+     *
+     * @return \Library\ManagerBundle\Libraries\Query 
+     */
+    public function getQuery()
+    {
+        return $this->_query;
+    }
+    
     private function _createResultSet(array $parsedData)
     {
         $resultSet = new ResultSet(true);
