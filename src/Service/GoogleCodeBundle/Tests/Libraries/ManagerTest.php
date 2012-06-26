@@ -12,7 +12,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 {
  
     /**
-     * @tefst 
+     * @test 
      */
     public function extendsManagerAbstract()
     {
@@ -21,7 +21,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @tefst 
+     * @test 
      */
     public function getSearchResultsForCorrectQuery()
     {
@@ -42,7 +42,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @tefst 
+     * @test 
      */
     public function getSearchResultsForIncorrectQuery()
     {
