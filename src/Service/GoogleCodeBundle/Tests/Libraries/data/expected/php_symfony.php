@@ -6,14 +6,14 @@
     'code' => 'GAPI is now at version 1.3 - This version contains fixes for the handling of very large metric values represented in scientific notation. Thanks to austinrehab for raising this issue.
 
 Developme...',
-    'language' => 'php, symfony, cakephp, zend-framework, php5',
+    'language' => 'php',
   ),
   1 => 
   array (
     'title' => 'piwam &nbsp;- &nbsp;Piwam Is A Wonderful Association Manager',
     'url' => 'http://code.google.com/p/piwam/',
     'code' => 'Association Manager, written in PHP with Symfony framework. But it has been developped for French associations only, which respect specific French laws. That is why this project space will...',
-    'language' => 'gestionnaire, association, manager, php, piwam, organization, 1901, management, gestion, trombinoscope, comptabilité, symfony, membres, cotisations, comptabilité',
+    'language' => 'gestionnaire',
   ),
   2 => 
   array (
@@ -22,7 +22,7 @@ Developme...',
     'code' => 'There are plenty of reasons, why I will discard the LUA plugin.
 
 1. I&#39;m a PHP developer and LUA is a pain for me, as it retains me from implementing good ideas. The second effect is, that users ...',
-    'language' => 'mysql, workbench, plugin, doctrine, symfony, export, yaml, php, ORM',
+    'language' => 'mysql',
   ),
   3 => 
   array (
@@ -31,7 +31,7 @@ Developme...',
     'code' => 'SabreAMF is now unmaintained. The announcement can be read  on my blog. 
 
 The sourcecode has been moved to  Github, where it can be freely forked. If somebody who cares enough steps up, I&#39;ll hap...',
-    'language' => 'sabreamf, php5, amf0, amf3, flashremoting, amf, php, client, server, flex, flash',
+    'language' => 'sabreamf',
   ),
   4 => 
   array (
@@ -40,7 +40,7 @@ The sourcecode has been moved to  Github, where it can be freely forked. If some
     'code' => 'We&#39;re finally moved to github: 
 
 Spyc is a YAML loader/dumper written in pure PHP. Given a YAML document, Spyc will return an array which you can use however you see fit. Given an array, Spyc will r...',
-    'language' => 'php, yaml, parser',
+    'language' => 'php',
   ),
   5 => 
   array (
@@ -56,14 +56,14 @@ Spyc is a YAML loader/dumper written in pure PHP. Given a YAML document, Spyc wi
 
 
 You can  entry issue, to report bug, request new features or suggest modifications to existing features.',
-    'language' => 'eclipse, java, plug-in, symfony, php, php5',
+    'language' => 'eclipse',
   ),
   6 => 
   array (
     'title' => 'eklipse &nbsp;- &nbsp;Eklipse',
     'url' => 'http://code.google.com/p/eklipse/',
     'code' => 'Página web oficial del grupo de música Eklipse',
-    'language' => 'PHP, Symfony, CSS',
+    'language' => 'PHP',
   ),
   7 => 
   array (
@@ -73,21 +73,21 @@ You can  entry issue, to report bug, request new features or suggest modificatio
 
 
 This project has been superseded by a behaviour for ORM...',
-    'language' => 'mptt, nestedsets, modifiedpreordertreetraversal, kohana, php, orm, formgeneration, validation, hmvc, spam',
+    'language' => 'mptt',
   ),
   8 => 
   array (
     'title' => 'lpsn &nbsp;- &nbsp;As3 symfony project',
     'url' => 'http://code.google.com/p/lpsn/',
     'code' => 'As3 symfony project',
-    'language' => 'ActionScript, PHP',
+    'language' => 'ActionScript',
   ),
   9 => 
   array (
     'title' => 'tutoriel-symfony-mathieu &nbsp;- &nbsp;test de symfony',
     'url' => 'http://code.google.com/p/tutoriel-symfony-mathieu/',
     'code' => 'C&#39;est le tutoriel symfony &quot;jobeet&quot;',
-    'language' => 'Subversion, Symfony, PHP',
+    'language' => 'Subversion',
   ),
 );
 ?>

@@ -34,7 +34,7 @@ class Parser implements ParserInterface
                         $tags = array();
                         
                         if (preg_match_all('/<a[^>]+>(.*?)<\/a>/ims', $elements[4], $tags))
-                            $lang = implode(', ', $tags[1]);
+                            $lang = $tags[1][0];
                         
                         $results[] = new Result($title, $url, $code, $lang);
                     }

@@ -4,7 +4,7 @@
     'title' => 'pipsqueek &nbsp;- &nbsp;Extensible Perl IRC Bot',
     'url' => 'http://code.google.com/p/pipsqueek/',
     'code' => 'PipSqueek is a perl-based IRC bot. An IRC bot is a regular chat client controlled by the computer, providing services and entertainment to the channel denizens it lives with. PipSqueek was written in ...',
-    'language' => 'IRC, Perl, Modular, Chat, Jabber, Bot',
+    'language' => 'IRC',
   ),
   1 => 
   array (
@@ -14,7 +14,7 @@
 
 
 Please hel...',
-    'language' => 'rapidshare, downloader, perl, linux, youtube, download, gtk, CLI, GUI, command-line, glade, depositfiles, megaupload',
+    'language' => 'rapidshare',
   ),
   2 => 
   array (
@@ -28,7 +28,7 @@ DESCRIPTION
     any irc client, and twitter as if you were on irc
 
 ...',
-    'language' => 'irc, twitter, perl',
+    'language' => 'irc',
   ),
   3 => 
   array (
@@ -38,7 +38,7 @@ DESCRIPTION
 
   A nice Windows installer that automatically downloads and installs the correct archive files
   All of the core Gtk2-Perl modules (Gtk...',
-    'language' => 'Perl, Gtk, Windows, GTK, Glade, zsh, GNU, gettext, XML, GUI',
+    'language' => 'Perl',
   ),
   4 => 
   array (
@@ -47,35 +47,35 @@ DESCRIPTION
     'code' => 'Casper-3 is a Channel Regulation System (CRS) for IRC channels.
 
 It is - essentially - a bot which performs administration tasks within an IRC channel, such as opping, voicing, maintaining a kic...',
-    'language' => 'IRC, Internet, Bot, Perl, SQL',
+    'language' => 'IRC',
   ),
   5 => 
   array (
     'title' => 'ubiquity-bot &nbsp;- &nbsp;Yet Another IRC Bot',
     'url' => 'http://code.google.com/p/ubiquity-bot/',
     'code' => 'Ubiquity-bot is the bot for the freenode #mysql channel',
-    'language' => 'IRC, bot, perl',
+    'language' => 'IRC',
   ),
   6 => 
   array (
     'title' => 'boneco-irc &nbsp;- &nbsp;Perl IRC bot priv8',
     'url' => 'http://code.google.com/p/boneco-irc/',
     'code' => 'um IRC bot BR (muito importante) com as vars configuraveis via comandos e com multiprocessamento.',
-    'language' => 'IRC, Perl, bot',
+    'language' => 'IRC',
   ),
   7 => 
   array (
     'title' => 'psas &nbsp;- &nbsp;Propaganda Streaming Audio System',
     'url' => 'http://code.google.com/p/psas/',
     'code' => 'Propaganda is a portable streaming audio system based on Linux.  Everything you need to webcast live audio or pre-recorded content is stored on a self-contained CD or flash disk, so you can broa...',
-    'language' => 'Perl, MP3, OGG, FLAC, SHN, Icecast, Shoutcast, Linux, audio, streaming, ramdisk, CD-ROM, flashdrive',
+    'language' => 'Perl',
   ),
   8 => 
   array (
     'title' => 'rose &nbsp;- &nbsp;Rose is a set of Perl modules focused on web application development.',
     'url' => 'http://code.google.com/p/rose/',
     'code' => 'Rose is a set of Perl modules focused on web application development. The modules that make up Rose include a DBI abstraction layer, an object-relational mapper (ORM), an HTML widget toolkit, and ...',
-    'language' => 'Perl, Web',
+    'language' => 'Perl',
   ),
   9 => 
   array (
@@ -84,7 +84,7 @@ It is - essentially - a bot which performs administration tasks within an IRC ch
     'code' => '现在就只有一个脚本，就是预定义的表情动作，在irc里无聊灌水用的 :D
 
 以及一些乱七八糟的文件备份',
-    'language' => 'irssi, game, script, perl, irc, Java, Android, Python',
+    'language' => 'irssi',
   ),
 );
 ?>

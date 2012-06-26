@@ -9,7 +9,7 @@ Primary Android resources include:
 
     Android Developer Home Page
     Android Developer Documentation, including the Getting Started Guide, and the API Refer...',
-    'language' => 'Google, Android',
+    'language' => 'Google',
   ),
   1 => 
   array (
@@ -18,7 +18,7 @@ Primary Android resources include:
     'code' => 'SimulationCraft is a tool to explore combat mechanics in the popular MMO RPG World of Warcraft (tm).
 
 It is a multi-player event driven simulator written in C++ that models player character dama...',
-    'language' => 'warcraft, wow, simulation, worldofwarcraft',
+    'language' => 'warcraft',
   ),
   2 => 
   array (
@@ -34,14 +34,14 @@ Visit  for documentation, wiki, and the forums.  This Google Code site is only f
     'title' => 'mobileterminal &nbsp;- &nbsp;A GUI Terminal application for the iPhone',
     'url' => 'http://code.google.com/p/mobileterminal/',
     'code' => 'This is the home of MobileTerminal.app, a terminal emulator application for the iPhone. MobileTerminal.app is NOT an SSH client, nor Telnet for that matter. It can however be used to execute a console...',
-    'language' => 'iphone, terminal, ssh, telnet, gui, interface, graphical',
+    'language' => 'iphone',
   ),
   4 => 
   array (
     'title' => 'android-wifi-tether &nbsp;- &nbsp;Wireless Tether for Root Users',
     'url' => 'http://code.google.com/p/android-wifi-tether/',
     'code' => 'This program enables tethering (via wifi) for &quot;rooted&quot; handsets running android (such as the Android DevPhone 1). Clients (your laptop for example) can connect via wifi (ad-hoc mode)and get access to ...',
-    'language' => 'Android, Root, Wifi, Tethering',
+    'language' => 'Android',
   ),
   5 => 
   array (
@@ -54,14 +54,14 @@ Visit  for documentation, wiki, and the forums.  This Google Code site is only f
 
 
 C...',
-    'language' => 'java, wicket, jQuery, jQueryUI, wickext, jquery4wicket, javascript, WiQuery, wicket1.5, wicket6.0',
+    'language' => 'java',
   ),
   6 => 
   array (
     'title' => 'ps3mediaserver &nbsp;- &nbsp;Java Upnp Media Server, dedicated to PS3',
     'url' => 'http://code.google.com/p/ps3mediaserver/',
     'code' => 'PS3 Media Server is a DLNA compliant Upnp Media Server for the PS3, written in Java, with the purpose of streaming or transcoding any kind of media files, with minimum configuration. It&#39;s backed u...',
-    'language' => 'java, ps3, upnp, dlna, media, transcode, streaming',
+    'language' => 'java',
   ),
   7 => 
   array (
@@ -71,7 +71,7 @@ C...',
 
 
 Dolphin is a Gamecube, Wii and Triforce (the arcade machine based on the Gamecube) emulator whic...',
-    'language' => 'gamecube, wii, nintendo, console, emulator, simulator, dynarec, jit, powerpc, triforce',
+    'language' => 'gamecube',
   ),
   8 => 
   array (
@@ -81,7 +81,7 @@ Dolphin is a Gamecube, Wii and Triforce (the arcade machine based on the Gamecub
 
 
   Simple: less than 200LOC client/ser...',
-    'language' => 'Python, Webservices, soap',
+    'language' => 'Python',
   ),
   9 => 
   array (
