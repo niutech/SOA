@@ -44,16 +44,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $resultSet = $this->_manager->getSearchResults();
         
         $this->assertInstanceOf('\Library\ManagerBundle\Libraries\ResultSet', $resultSet);
-        $this->assertTrue($resultSet->getSuccess());
-        $this->assertCount(3, $resultSet->getResults());
-        $this->assertNull($resultSet->getMessage());
-        
-        $query = new Query();
-        $query->setLanguage('language', 'php')
-                ->setQuery('q', 'mock-query-123456');
-        
-        $this->assertEquals($query, $resultSet->getQuery());
-        $this->assertEquals('php', $resultSet->getLanguage());
+        $this->assertTrue($resultSet->success);
+        $this->assertCount(3, $resultSet->results);
+        $this->assertNull($resultSet->message);
     }
     
     /**

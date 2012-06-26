@@ -1,0 +1,6 @@
+parameters:
+#    code_search.example.class: SOA\CodeSearchBundle\Example
+
+services:
+    SoapFacade:
+        class: Server\CodeSearchBundle\Libraries\SoapFacade

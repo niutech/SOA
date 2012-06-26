@@ -10,14 +10,14 @@ class ResultSetFactory
     /**
      *
      * @param string $message
-     * @param \Library\ManagerBundle\Libraries\Query $query
      * @return \Library\ManagerBundle\Libraries\ResultSet 
      */
-    public static function createUnsuccessful($message, Query $query)
+    public static function createUnsuccessful($message)
     {
         $resultSet = new ResultSet(false);
-
-        return $resultSet->setMessage($message)->setQuery($query);
+        $resultSet->message = $message;
+        
+        return $resultSet;
     }
 
 }

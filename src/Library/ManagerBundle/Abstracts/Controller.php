@@ -15,12 +15,11 @@ abstract class Controller extends FrameworkBundleController
         
         try
         {
-            $manager = $this->_getManager($request);
-            $resultSet = $manager->getSearchResults();
+            $resultSet = $this->_getManager($request)->getSearchResults();
         }
         catch (\Exception $ex)
         {
-            $resultSet = ResultSetFactory::createUnsuccessful($ex->getMessage(), $manager->getQuery());
+            $resultSet = ResultSetFactory::createUnsuccessful($ex->getMessage());
         }
         
         $response = new Response($resultSet->getEncoded());

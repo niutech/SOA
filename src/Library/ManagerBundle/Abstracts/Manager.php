@@ -69,8 +69,7 @@ abstract class Manager
         else
             $resultSet = new ResultSet(false);
         
-        return $resultSet->setQuery($this->_query)
-                         ->setResults($results);
+        return $resultSet->setResults($results);
     }
     
     /**

@@ -1,0 +1,4 @@
+ServerCodeSearchBundle_Search:
+    pattern:  /search
+    defaults: { _controller: ServerCodeSearchBundle:Search:index }
+    

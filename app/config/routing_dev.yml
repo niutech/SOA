@@ -1,7 +1,3 @@
-CodeSearchBundle:
-    resource: "@CodeSearchBundle/Resources/config/routing.yml"
-    prefix:   /
-
 _assetic:
     resource: .
     type:     assetic

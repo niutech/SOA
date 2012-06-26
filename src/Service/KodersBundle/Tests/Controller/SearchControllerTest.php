@@ -25,7 +25,7 @@ class SearchControllerTest extends WebTestCase
         $this->_client->request('GET', $this->_getUrl());
         
         $this->assertEquals('application/json', $this->_client->getResponse()->headers->get('Content-Type'));
-        $this->assertEquals('{"success":false,"message":null,"language":"","results":[],"query":"s=&la="}', $this->_client->getResponse()->getContent());
+        $this->assertEquals('{"success":false,"message":null,"results":[]}', $this->_client->getResponse()->getContent());
     }
     
     /**
@@ -42,7 +42,6 @@ class SearchControllerTest extends WebTestCase
 
         $this->assertEquals(1, $response->success);
         $this->assertEquals('', (string) $response->message);
-        $this->assertEquals($lang, (string) $response->language);
         $this->assertInternalType('array', $response->results);
         $this->assertGreaterThan(0, count($response->results));
     }
@@ -68,7 +67,6 @@ class SearchControllerTest extends WebTestCase
 
         $this->assertFalse($response->success);
         $this->assertEquals('', (string) $response->message);
-        $this->assertEquals('php', (string) $response->language);
         $this->assertInternalType('array', $response->results);
         $this->assertEquals(0, count($response->results));
     }

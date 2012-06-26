@@ -34,11 +34,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         
         $resultSet = $manager->getSearchResults();
         
-        $this->assertTrue($resultSet->getSuccess());
-        $this->assertEquals('php', $resultSet->getLanguage());
-        $this->assertGreaterThan(0, count($resultSet->getResults()));
-        $this->assertNull($resultSet->getMessage());
-        $this->assertEquals('s=symfony&la=php', $resultSet->getQuery()->encode());
+        $this->assertTrue($resultSet->success);
+        $this->assertGreaterThan(0, count($resultSet->results));
+        $this->assertNull($resultSet->message);
     }
     
     /**
@@ -55,11 +53,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         
         $resultSet = $manager->getSearchResults();
         
-        $this->assertFalse($resultSet->getSuccess());
-        $this->assertEquals('phpphpphp', $resultSet->getLanguage());
-        $this->assertCount(0, $resultSet->getResults());
-        $this->assertNull($resultSet->getMessage());
-        $this->assertEquals('s=absfduyfanbcsgfsacgf&la=phpphpphp', $resultSet->getQuery()->encode());
+        $this->assertFalse($resultSet->success);
+        $this->assertCount(0, $resultSet->results);
+        $this->assertNull($resultSet->message);        
     }
     
     /**
@@ -79,10 +75,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         
         $resultSet = $manager->getSearchResults();
         
-        $this->assertFalse($resultSet->getSuccess());
-        $this->assertEmpty($resultSet->getLanguage());
-        $this->assertCount(0, $resultSet->getResults());
-        $this->assertNull($resultSet->getMessage());
-        $this->assertEquals('s=&la=', $resultSet->getQuery()->encode());
+        $this->assertFalse($resultSet->success);
+        $this->assertCount(0, $resultSet->results);
+        $this->assertNull($resultSet->message);        
     }
 }

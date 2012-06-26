@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Library\ManagerBundle\LibraryManagerBundle(),
             new Service\KodersBundle\ServiceKodersBundle(),
             new Service\GoogleCodeBundle\ServiceGoogleCodeBundle(),
+            new Server\CodeSearchBundle\ServerCodeSearchBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
