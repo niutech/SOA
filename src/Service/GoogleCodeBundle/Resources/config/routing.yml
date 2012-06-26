@@ -1,0 +1,3 @@
+ServiceGoogleCodeBundle_Search:
+    pattern:  /search/google_code/{query_string}
+    defaults: { _controller: ServiceGoogleCodeBundle:Search:index, query_string: 'query=&lang=' }

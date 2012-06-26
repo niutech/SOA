@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Library\ParserBundle\LibraryParserBundle(),
             new Library\ManagerBundle\LibraryManagerBundle(),
             new Service\KodersBundle\ServiceKodersBundle(),
+            new Service\GoogleCodeBundle\ServiceGoogleCodeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -49,7 +49,7 @@ class Curl
     {
         if (-1 === --$this->_iterationsLeft)
             throw new CurlException('Failed when trying to get: ' . $url . '. ' . $this->getErrno() . ': ' . $this->getError());
-
+            
         curl_setopt($this->_curl, CURLOPT_URL, rawurldecode($url));
 
         $result = curl_exec($this->_curl);

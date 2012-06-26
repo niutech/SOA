@@ -7,7 +7,7 @@ use \Library\CurlBundle\Classes\Curl\Anonymous as AnonymousCurl;
 use \Library\ManagerBundle\Interfaces\Manager as ManagerInterface;
 use \Library\ManagerBundle\Libraries\ResultSet;
 use \Library\ManagerBundle\Libraries\Query;
-use \Library\ManagerBundle\Libraries\QueryBuilder;
+use \Library\ManagerBundle\Libraries\QueryDecorator;
 
 abstract class Manager
 {
@@ -33,7 +33,9 @@ abstract class Manager
      */
     public function __construct(Request $request)
     {
-        $this->_query = QueryBuilder::fromRequest($request, $this->_getUrlParamsMapper());
+        $queryDecorator = new QueryDecorator($this->_getQuery());
+        
+        $this->_query = $queryDecorator->decorate($request, $this->_getUrlParamsMapper());
         $this->_curl = new AnonymousCurl();
         
         $reader = new \Symfony\Component\Yaml\Yaml();
@@ -46,19 +48,26 @@ abstract class Manager
      */
     public function getSearchResults()
     {
-        $url = $this->_getBaseUrl() . $this->_query->encode();
-        $cacheFile = __DIR__ . '/../../../../app/cache/' . $this->_config['search_cache']['directory'] . '/' . md5($url);
+        $url        = $this->_getBaseUrl() . $this->_query->encode();
+        $results    = array();
         
-        if ($this->_isCached($cacheFile))
-            $results = $this->_getFromCache($cacheFile);
-        else
+        if ($url !== $this->_getBaseUrl())
         {
-            $results = $this->_getParser()->parse($this->_curl->getPage($url));
-            
-            $this->_cache($results, $cacheFile);
+            $cacheFile = __DIR__ . '/../../../../app/cache/' . $this->_config['search_cache']['directory'] . '/' . md5($url);
+
+            if ($this->_isCached($cacheFile))
+                $results = $this->_getFromCache($cacheFile);
+            else
+            {
+                $results = $this->_getParser()->parse($this->_curl->getPage($url));
+
+                $this->_cache($results, $cacheFile);
+            }
+
+            $resultSet = new ResultSet(count($results) > 0);
         }
-        
-        $resultSet = new ResultSet(count($results) > 0);
+        else
+            $resultSet = new ResultSet(false);
         
         return $resultSet->setQuery($this->_query)
                          ->setResults($results);
@@ -71,6 +80,15 @@ abstract class Manager
     public function getQuery()
     {
         return $this->_query;
+    }
+    
+    /**
+     *
+     * @return \Library\ManagerBundle\Libraries\Query 
+     */
+    protected function _getQuery()
+    {
+        return new Query();
     }
     
     /**

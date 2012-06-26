@@ -10,22 +10,22 @@ class Query
     /**
      * @var string
      */
-    private $_language;
+    protected $_language = '';
 
     /**
      * @var string
      */
-    private $_languageParam;
+    protected $_languageParam;
 
     /**
      * @var string
      */
-    private $_query;
+    protected $_query = '';
 
     /**
      * @var string
      */
-    private $_queryParam;
+    protected $_queryParam;
 
     /**
      *
@@ -93,7 +93,7 @@ class Query
             $params[$this->_languageParam] = $this->_language;
         
         if (0 === count($params))
-            throw new ManagerException('Either query or language must be set.');
+            throw new ManagerException('Either query or language param must be set.');
         
         return http_build_query($params);
     }

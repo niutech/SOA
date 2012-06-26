@@ -18,7 +18,7 @@ abstract class Controller extends FrameworkBundleController
             $manager = $this->_getManager($request);
             $resultSet = $manager->getSearchResults();
         }
-        catch (\Library\ManagerBundle\Exception $ex)
+        catch (\Exception $ex)
         {
             $resultSet = ResultSetFactory::createUnsuccessful($ex->getMessage(), $manager->getQuery());
         }

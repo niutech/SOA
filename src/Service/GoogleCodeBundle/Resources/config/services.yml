@@ -1,0 +1,7 @@
+parameters:
+#    service_google_code.example.class: Service\GoogleCodeBundle\Example
+
+services:
+#    service_google_code.example:
+#        class: %service_google_code.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

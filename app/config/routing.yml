@@ -1,3 +1,7 @@
+ServiceGoogleCodeBundle:
+    resource: "@ServiceGoogleCodeBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ServiceKodersBundle:
     resource: "@ServiceKodersBundle/Resources/config/routing.yml"
     prefix:   /
