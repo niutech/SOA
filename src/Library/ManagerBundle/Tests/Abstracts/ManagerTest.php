@@ -57,7 +57,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $sha1 = sha1(mktime());
         
         $hash = md5('https://github.com/search?repo=&langOverride=&start_value=1&type=Code&q=' . $sha1 . '&language=php');
-        $cacheFile = __DIR__ . '/../../../../../app/cache/searchcache/' . $hash;
+        $cacheFile = __DIR__ . '/../../../../../app/cache/servicecache/' . $hash;
         
         if (file_exists($cacheFile))
             unlink ($cacheFile);
