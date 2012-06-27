@@ -15,4 +15,10 @@ interface UrlParamsMapper
      */
     public function getLanguageParamName();
     
+    /**
+     * @param string $language
+     * @return string 
+     */
+    public function mapLanguage($language);
+    
 }

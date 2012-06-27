@@ -36,7 +36,7 @@ class QueryDecorator
         
         return $this->_query
                     ->setQuery($urlParamsMapper->getQueryParamName(), isset($params['query']) ? $params['query'] : '')
-                    ->setLanguage($urlParamsMapper->getLanguageParamName(), isset($params['lang']) ? $params['lang'] : '');
+                    ->setLanguage($urlParamsMapper->getLanguageParamName(), isset($params['lang']) ? $urlParamsMapper->mapLanguage($params['lang']) : '');
     }
 
 }
