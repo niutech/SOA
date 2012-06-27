@@ -42,7 +42,6 @@ class SearchControllerTest extends WebTestCase
 
         $this->assertEquals(1, $response->success);
         $this->assertEquals('', (string) $response->message);
-        $this->assertInternalType('array', $response->results);
         $this->assertGreaterThan(0, count($response->results));
     }
     
@@ -67,7 +66,6 @@ class SearchControllerTest extends WebTestCase
 
         $this->assertFalse($response->success);
         $this->assertEquals('', (string) $response->message);
-        $this->assertInternalType('array', $response->results);
         $this->assertEquals(0, count($response->results));
     }
     

@@ -38,4 +38,22 @@ class UrlParamsMapperTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('la', $this->_mapper->getLanguageParamName());
     }
+    
+    /**
+     * @test
+     * @dataProvider languageProvider
+     */
+    public function mapLanguage($lang, $expected)
+    {
+        $this->assertEquals($expected, $this->_mapper->mapLanguage($lang));
+    }
+    
+    public static function languageProvider()
+    {
+        return array(
+            array('php', 'php'),
+            array('c++', 'cpp'),
+            array('C++', 'cpp')
+        );
+    }
 }

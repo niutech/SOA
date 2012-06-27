@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use \Library\ManagerBundle\Libraries\Query;
 use \Library\ManagerBundle\Libraries\Result;
 use \Library\ManagerBundle\Abstracts\Manager as ManagerAbstract;
-use \Library\ManagerBundle\Interfaces\UrlParamsMapper as UrlParamsMapperInterface;
+use \Library\ManagerBundle\Abstracts\UrlParamsMapper as UrlParamsMapperAbstract;
 use \Library\ParserBundle\Interfaces\Parser as ParserInterface;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
@@ -101,7 +101,7 @@ class ManagerAbstractMock extends ManagerAbstract
 
 }
 
-class UrlParamsMapperMock implements UrlParamsMapperInterface
+class UrlParamsMapperMock extends UrlParamsMapperAbstract
 {
 
     public function getQueryParamName()

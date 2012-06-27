@@ -35,25 +35,34 @@ class SoapFacade
         $results = array();
 
         foreach ($this->_getRegistredServices() as $service)
-        {
-            // Magic, do not touch.
-            // Fucking ugly but provides incredibly huge speedup :]
-            $request = new Request();
-            $request->initialize(array(
-                'query_string' => 'query=' . $query . '&lang=' . $language
-            ));
-
-            $controllerName = '\Service\\' . $service . '\Controller\SearchController';
-            $controller = new $controllerName();
-
-            $results[] = json_decode($controller->indexAction($request)->getContent());
-        }
+            $results[] = $this->_queryService($service, $query, $language);
 
         $cumulativeResultSet = $this->_createCumulativeResultSet($results);
         
         $this->_cache($cumulativeResultSet, $cacheFile);
         
         return $cumulativeResultSet;
+    }
+    
+    /**
+     * Magic, do not touch. Fucking ugly but provides incredibly huge speedup :]
+     * 
+     * @param string $service
+     * @param string $query
+     * @param string $language
+     * @return \stdClass 
+     */
+    private function _queryService($service, $query, $language)
+    {
+        $request = new Request();
+        $request->initialize(array(
+            'query_string' => 'query=' . $query . '&lang=' . $language
+        ));
+
+        $controllerName = '\Service\\' . $service . '\Controller\SearchController';
+        $controller = new $controllerName();
+
+        return json_decode($controller->indexAction($request)->getContent());
     }
 
     /**
@@ -71,12 +80,14 @@ class SoapFacade
             if ($resultSet->success)
             {
                 $success = true;
-                $results = array_merge($results, $resultSet->results);
+                $results = array_merge($results, (array) $resultSet->results);
             }
         }
 
+        shuffle($results);
+        
         $cumulativeResultSet = new ResultSet($success);
-        $cumulativeResultSet->results = $results;
+        $cumulativeResultSet->results = array_unique($results, SORT_REGULAR);
 
         return $cumulativeResultSet;
     }

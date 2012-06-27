@@ -16,4 +16,12 @@ class UrlParamsMapper implements UrlParamsMapperInterface
     {
         return 'la';
     }
+    
+    public function mapLanguage($language)
+    {
+        if ('c++' === strtolower($language))
+            return 'cpp';
+        
+        return $language;
+    }
 }
