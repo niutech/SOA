@@ -1,5 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteRule ^$ index.html [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ app_dev.php [QSA,L]
 </IfModule>
