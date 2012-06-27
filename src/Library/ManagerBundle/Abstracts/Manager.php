@@ -59,7 +59,7 @@ abstract class Manager
                 $results = $this->_getFromCache($cacheFile);
             else
             {
-                $results = $this->_getParser()->parse($this->_curl->getPage($url));
+                $results = array_unique($this->_getParser()->parse($this->_curl->getPage($url)), SORT_REGULAR);
 
                 $this->_cache($results, $cacheFile);
             }

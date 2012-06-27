@@ -71,12 +71,14 @@ class SoapFacade
             if ($resultSet->success)
             {
                 $success = true;
-                $results = array_merge($results, $resultSet->results);
+                $results = array_merge($results, (array) $resultSet->results);
             }
         }
 
+        shuffle($results);
+        
         $cumulativeResultSet = new ResultSet($success);
-        $cumulativeResultSet->results = $results;
+        $cumulativeResultSet->results = array_unique($results, SORT_REGULAR);
 
         return $cumulativeResultSet;
     }
