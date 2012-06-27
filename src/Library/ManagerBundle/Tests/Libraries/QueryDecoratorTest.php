@@ -5,7 +5,7 @@ namespace Library\ManagerBundle\Tests\Libraries;
 use Symfony\Component\HttpFoundation\Request;
 use \Library\ManagerBundle\Libraries\Query;
 use \Library\ManagerBundle\Libraries\QueryDecorator;
-use \Library\ManagerBundle\Interfaces\UrlParamsMapper as UrlParamsMapperInterface;
+use \Library\ManagerBundle\Abstracts\UrlParamsMapper as UrlParamsMapperAbstract;
 
 class QueryDecoratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -56,7 +56,7 @@ class QueryMock extends Query
     }
 }
 
-class UrlParamsMapperInterfaceMock implements UrlParamsMapperInterface
+class UrlParamsMapperInterfaceMock extends UrlParamsMapperAbstract
 {
     public function getQueryParamName()
     {

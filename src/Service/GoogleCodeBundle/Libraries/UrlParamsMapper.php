@@ -2,9 +2,9 @@
 
 namespace Service\GoogleCodeBundle\Libraries;
 
-use \Library\ManagerBundle\Interfaces\UrlParamsMapper as UrlParamsMapperInterface;
+use \Library\ManagerBundle\Abstracts\UrlParamsMapper as UrlParamsMapperAbstract;
 
-class UrlParamsMapper implements UrlParamsMapperInterface
+class UrlParamsMapper extends UrlParamsMapperAbstract
 {
 
     public function getQueryParamName()
